@@ -1,3 +1,4 @@
+import { RootState } from "@/redux/app/store";
 import { createSlice } from "@reduxjs/toolkit";
 
 type Todo = {
@@ -38,6 +39,9 @@ const todoSlice = createSlice({
 
 
 export const {addTask} = todoSlice.actions;
+
+
+export const selectTasks = (state:RootState) => state.todos.tasks
 
 const todoReducer = todoSlice.reducer;
 
