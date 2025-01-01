@@ -1,6 +1,6 @@
 import App from "@/App";
-import Login from "@/components/Auth/Login";
-import Task from "@/components/Tasks/Task";
+import Login from "@/pages/Login";
+import Todos from "@/pages/Todos";
 import { createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -10,7 +10,7 @@ const router = createBrowserRouter([
         children:[
             {
                 index: true,
-                element: <Task />
+                element: <Todos />
             },
             {
                 path: "login",

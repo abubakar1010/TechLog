@@ -1,5 +1,5 @@
 
-const Task = () => {
+const Todos = () => {
     return (
         <div>
             <p>This is task page</p>
@@ -7,4 +7,4 @@ const Task = () => {
     );
 };
 
-export default Task;
+export default Todos;
