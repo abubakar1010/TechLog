@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import { RouterProvider } from "react-router-dom";
 import router from "./routes/router.tsx";
-import { ThemeProvider } from "./components/theme-provider.tsx";
+import { ThemeProvider } from "./components/providers/theme-provider.tsx";
 import { Provider } from "react-redux";
 import { store } from "./redux/app/store.ts";
 

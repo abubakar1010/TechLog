@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ModeToggle } from "./mode-toggole";
+import { ModeToggle } from "./ui/mode-toggole";
 
 const Navbar = () => {
     return (
