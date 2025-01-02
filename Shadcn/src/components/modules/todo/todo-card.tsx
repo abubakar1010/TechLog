@@ -1,0 +1,66 @@
+import * as React from "react"
+import { Trash2, Calendar } from 'lucide-react'
+
+import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card"
+import { Checkbox } from "@/components/ui/checkbox"
+import { TTask } from "@/types"
+import { cn } from "@/lib/utils"
+
+type TProps = {
+    task: TTask
+}
+
+export function TodoCard({task}: TProps) {
+  const [isChecked, setIsChecked] = React.useState(false)
+
+  return (
+    <Card className="w-full">
+      <CardContent className="pt-8 pb-4 px-6">
+        <div className="relative">
+          <div 
+            className={cn("absolute -top-6 left-0 w-3 h-3 rounded-full",{
+                "bg-red-500" : task.priority === "HIGH",
+                "bg-blue-500" : task.priority === "MEDIUM",
+                "bg-yellow-500" : task.priority === "LOW",
+            })}
+          />
+          <div className="space-y-4">
+            <div className="flex items-center space-x-2">
+              <Checkbox 
+                id="task" 
+                checked={isChecked}
+                onCheckedChange={(checked) => setIsChecked(checked as boolean)}
+              />
+              <label
+                htmlFor="task"
+                className={`font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${
+                  isChecked ? 'line-through text-gray-500' : ''
+                }`}
+              >
+                {task.title}
+              </label>
+            </div>
+            <p className="text-sm text-gray-500">
+              {task.description}
+            </p>
+          </div>
+        </div>
+      </CardContent>
+      <CardFooter className="flex justify-between items-center px-6 py-4 ">
+        <div className="flex items-center text-sm ">
+          <Calendar className="mr-2 h-4 w-4" />
+          <span>Deadline: {task.date.toDateString()}</span>
+        </div>
+        <Button variant="destructive" size="icon">
+          <Trash2 className="h-4 w-4" />
+        </Button>
+      </CardFooter>
+    </Card>
+  )
+}
+
