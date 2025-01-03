@@ -8,3 +8,7 @@ export type TTask = {
 }
 
 export type TDraftTask = Omit<TTask, "id" | "isComplete">
+
+
+export type TFilter = "ALL" | TTask["priority"]
+

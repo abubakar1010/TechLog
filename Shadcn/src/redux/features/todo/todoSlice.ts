@@ -1,9 +1,10 @@
 import { RootState } from "@/redux/app/store";
-import { TDraftTask, TTask } from "@/types";
+import { TDraftTask, TFilter, TTask } from "@/types";
 import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
 
 type Todo = {
 	tasks: TTask[];
+	filter: TFilter;
 };
 
 const initialState: Todo = {
@@ -36,6 +37,7 @@ const initialState: Todo = {
 			priority: "MEDIUM",
 		},
 	],
+	filter: "ALL"
 };
 
 const createTask = (actionData: TDraftTask): TTask => ({
@@ -78,19 +80,28 @@ const todoSlice = createSlice({
 		// 	);
 		// },
 
-		updateTask(state, action: PayloadAction<TDraftTask & Pick<TTask, "id" | "isComplete">>) {
+		updateTask(
+			state,
+			action: PayloadAction<TDraftTask & Pick<TTask, "id" | "isComplete">>
+		) {
 			state.tasks = state.tasks.map((task) =>
-				task.id === action.payload.id
-					?  {...action.payload}
-					: task
+				task.id === action.payload.id ? { ...action.payload } : task
 			);
+		},
+		filterTask(state, action: PayloadAction<TFilter>) {
+			state.filter = action.payload;
 		},
 	},
 });
 
-export const { addTask, isCompleteToggle, deleteTask, updateTask } = todoSlice.actions;
+export const { addTask, isCompleteToggle, deleteTask, updateTask, filterTask } =
+	todoSlice.actions;
 
-export const selectTasks = (state: RootState) => state.todos.tasks;
+export const selectTasks = (state: RootState) => {
+	if(state.todos.filter === "ALL") return state.todos.tasks
+	return state.todos.tasks.filter((task) => task.priority === state.todos.filter);
+}
+	
 
 const todoReducer = todoSlice.reducer;
 
