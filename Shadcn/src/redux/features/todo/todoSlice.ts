@@ -56,16 +56,20 @@ const todoSlice = createSlice({
 			state.tasks.push(taskData);
 		},
 		isCompleteToggle(state, action: PayloadAction<string>) {
-			return state.tasks.forEach((item) =>
-				item.id === action.payload
-					? (item.isComplete = !item.isComplete)
-					: item
+			 state.tasks.forEach((task) =>
+				task.id === action.payload
+					? (task.isComplete = !task.isComplete)
+					: task
 			);
 		},
+		deleteTask(state, action: PayloadAction<string>) {
+			state.tasks = state.tasks.filter((task) => task.id !== action.payload
+			);
+		}
 	},
 });
 
-export const { addTask, isCompleteToggle } = todoSlice.actions;
+export const { addTask, isCompleteToggle, deleteTask } = todoSlice.actions;
 
 export const selectTasks = (state: RootState) => state.todos.tasks;
 

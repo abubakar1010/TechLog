@@ -11,7 +11,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { TTask } from "@/types"
 import { cn } from "@/lib/utils"
 import { useAppDispatch } from "@/redux/app/hooks"
-import { isCompleteToggle } from "@/redux/features/todo/todoSlice"
+import { deleteTask, isCompleteToggle } from "@/redux/features/todo/todoSlice"
 
 type TProps = {
     task: TTask
@@ -58,8 +58,8 @@ export function TodoCard({task}: TProps) {
           <Calendar className="mr-2 h-4 w-4" />
           <span>Deadline: {task.deadline.toDateString()}</span>
         </div>
-        <Button variant="destructive" size="icon">
-          <Trash2 className="h-4 w-4" />
+        <Button onClick={() => dispatch(deleteTask(task.id))} variant="destructive" size="icon">
+          <Trash2  className="h-4 w-4" />
         </Button>
       </CardFooter>
     </Card>
