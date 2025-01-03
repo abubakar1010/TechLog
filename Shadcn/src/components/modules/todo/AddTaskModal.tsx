@@ -8,7 +8,6 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import { useForm } from "react-hook-form";
 import {
 	Form,
 	FormControl,
@@ -20,26 +19,53 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-// import { TTask } from "@/types";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 
-// type FormValue = Pick<TTask, "title" | "description" | "priority"> & {deadline: string}
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import { useForm } from "react-hook-form";
+
+import { cn } from "@/lib/utils";
+import { Calendar } from "@/components/ui/calendar";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui/popover";
+import { toast } from "@/hooks/use-toast";
 
 export function AddTaskModal() {
 	const form = useForm();
 
+	// const {toast} = useToast()
+
 	const onSubmit = (value: Record<string, unknown>) => {
+		toast({
+			title: "You submitted the following values:",
+			description: (
+			  <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+				<code className="text-white">{JSON.stringify(value, null, 2)}</code>
+			  </pre>
+			),
+		  })
 		console.log(
 			value.deadline,
 			value.description,
 			value.priority,
 			value.title
 		);
+		
 	};
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button >Add Task</Button>
+				<Button>Add Task</Button>
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
@@ -101,11 +127,12 @@ export function AddTaskModal() {
 									<FormItem>
 										<FormLabel>Priority</FormLabel>
 										<FormControl>
-											<Select  onValueChange={field.onChange} defaultValue={"MEDIUM"}  >
-												<SelectTrigger className="w-[180px]">
-													<SelectValue 
-                                                    
-                                                    placeholder="Select task priority" />
+											<Select
+												onValueChange={field.onChange}
+												defaultValue={field.value}
+											>
+												<SelectTrigger className="">
+													<SelectValue placeholder="Select task priority" />
 												</SelectTrigger>
 												<SelectContent>
 													<SelectItem value="HIGH">
@@ -121,7 +148,7 @@ export function AddTaskModal() {
 											</Select>
 										</FormControl>
 										<FormDescription className=" sr-only">
-											This is your public display name.
+											This is your task prioroty
 										</FormDescription>
 										<FormMessage />
 									</FormItem>
@@ -131,29 +158,60 @@ export function AddTaskModal() {
 								control={form.control}
 								name="deadline"
 								render={({ field }) => (
-									<FormItem>
+									<FormItem className="flex flex-col">
 										<FormLabel>DeadLine</FormLabel>
-										<FormControl>
-											<Input
-												placeholder="How much day you want to take"
-												{...field}
-												value={field.value ?? ""}
-											/>
-										</FormControl>
-										<FormDescription className=" sr-only">
-											This is your public display name.
-										</FormDescription>
+										<Popover>
+											<PopoverTrigger asChild>
+												<FormControl>
+													<Button
+														variant={"outline"}
+														className={cn(
+															" pl-3 text-left font-normal",
+															!field.value &&
+																"text-muted-foreground"
+														)}
+													>
+														{field.value ? (
+															format(
+																field.value,
+																"PPP"
+															)
+														) : (
+															<span>
+																Pick a deadline
+															</span>
+														)}
+														<CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+													</Button>
+												</FormControl>
+											</PopoverTrigger>
+											<PopoverContent
+												className="w-auto p-0"
+												align="start"
+											>
+												<Calendar
+													mode="single"
+													selected={field.value}
+													onSelect={field.onChange}
+													disabled={(date) => date < new Date()
+													}
+													initialFocus
+												/>
+											</PopoverContent>
+										</Popover>
+
 										<FormMessage />
 									</FormItem>
 								)}
 							/>
 							<DialogFooter>
-								<Button type="submit">Save</Button>
+								<Button  type="submit">Save</Button>
 							</DialogFooter>
 						</form>
 					</Form>
 				</div>
 			</DialogContent>
+			
 		</Dialog>
 	);
 }
