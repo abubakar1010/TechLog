@@ -10,14 +10,16 @@ import {
 import { Checkbox } from "@/components/ui/checkbox"
 import { TTask } from "@/types"
 import { cn } from "@/lib/utils"
+import { useAppDispatch } from "@/redux/app/hooks"
+import { isCompleteToggle } from "@/redux/features/todo/todoSlice"
 
 type TProps = {
     task: TTask
 }
 
 export function TodoCard({task}: TProps) {
-  const [isChecked, setIsChecked] = React.useState(false)
 
+  const dispatch = useAppDispatch()
   return (
     <Card className="w-full">
       <CardContent className="pt-8 pb-4 px-6">
@@ -33,13 +35,13 @@ export function TodoCard({task}: TProps) {
             <div className="flex items-center space-x-2">
               <Checkbox 
                 id="task" 
-                checked={isChecked}
-                onCheckedChange={(checked) => setIsChecked(checked as boolean)}
+                checked={task.isComplete}
+                onCheckedChange={() => dispatch(isCompleteToggle(task.id)) }
               />
               <label
                 htmlFor="task"
                 className={`font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${
-                  isChecked ? 'line-through text-gray-500' : ''
+                  task.isComplete ? 'line-through text-gray-500' : ''
                 }`}
               >
                 {task.title}
@@ -54,7 +56,7 @@ export function TodoCard({task}: TProps) {
       <CardFooter className="flex justify-between items-center px-6 py-4 ">
         <div className="flex items-center text-sm ">
           <Calendar className="mr-2 h-4 w-4" />
-          <span>Deadline: {task.date.toDateString()}</span>
+          <span>Deadline: {task.deadline.toDateString()}</span>
         </div>
         <Button variant="destructive" size="icon">
           <Trash2 className="h-4 w-4" />

@@ -1,8 +1,10 @@
 export type TTask = {
     id: string;
-    date: Date;
+    deadline: Date;
     title: string;
     description: string;
     isComplete: boolean;
     priority: "HIGH" | "LOW" | "MEDIUM";
 }
+
+export type TDraftTask = Omit<TTask, "id" | "isComplete">

@@ -29,7 +29,7 @@ import {
 
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
@@ -39,28 +39,30 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { toast } from "@/hooks/use-toast";
+import { useAppDispatch } from "@/redux/app/hooks";
+import { addTask } from "@/redux/features/todo/todoSlice";
+import { TDraftTask } from "@/types";
 
 export function AddTaskModal() {
 	const form = useForm();
 
 	// const {toast} = useToast()
 
-	const onSubmit = (value: Record<string, unknown>) => {
+	const dispatch = useAppDispatch();
+
+	const onSubmit: SubmitHandler<FieldValues> = (value) => {
 		toast({
 			title: "You submitted the following values:",
 			description: (
-			  <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-				<code className="text-white">{JSON.stringify(value, null, 2)}</code>
-			  </pre>
+				<pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+					<code className="text-white">
+						{JSON.stringify(value, null, 2)}
+					</code>
+				</pre>
 			),
-		  })
-		console.log(
-			value.deadline,
-			value.description,
-			value.priority,
-			value.title
-		);
-		
+		});
+
+		dispatch(addTask(value as TDraftTask));
 	};
 	return (
 		<Dialog>
@@ -193,7 +195,8 @@ export function AddTaskModal() {
 													mode="single"
 													selected={field.value}
 													onSelect={field.onChange}
-													disabled={(date) => date < new Date()
+													disabled={(date) =>
+														date < new Date()
 													}
 													initialFocus
 												/>
@@ -205,13 +208,12 @@ export function AddTaskModal() {
 								)}
 							/>
 							<DialogFooter>
-								<Button  type="submit">Save</Button>
+								<Button type="submit">Save</Button>
 							</DialogFooter>
 						</form>
 					</Form>
 				</div>
 			</DialogContent>
-			
 		</Dialog>
 	);
 }
