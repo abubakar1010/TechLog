@@ -29,9 +29,10 @@ import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { TTask } from "@/types";
 
 
-const TaskModal = ({ onSubmit }: {onSubmit: SubmitHandler<FieldValues>}) => {
+const TaskModal = ({ onSubmit, task }: {onSubmit: SubmitHandler<FieldValues>, task: TTask | null}) => {
 	const form = useForm();
 
 	return (
@@ -51,7 +52,7 @@ const TaskModal = ({ onSubmit }: {onSubmit: SubmitHandler<FieldValues>}) => {
 									<Input
 										placeholder="Task Title"
 										{...field}
-										value={field.value ?? ""}
+										value={ field.value ?? task?.title}
 									/>
 								</FormControl>
 								<FormDescription className=" sr-only">
@@ -71,7 +72,7 @@ const TaskModal = ({ onSubmit }: {onSubmit: SubmitHandler<FieldValues>}) => {
 									<Textarea
 										placeholder="Task Description"
 										{...field}
-										value={field.value ?? ""}
+										value={field.value ?? task?.description}
 									/>
 								</FormControl>
 								<FormDescription className=" sr-only">
@@ -90,10 +91,12 @@ const TaskModal = ({ onSubmit }: {onSubmit: SubmitHandler<FieldValues>}) => {
 								<FormControl>
 									<Select
 										onValueChange={field.onChange}
-										defaultValue={field.value}
+										value={field.value ?? task?.priority}
 									>
 										<SelectTrigger className="">
-											<SelectValue placeholder="Select task priority" />
+											<SelectValue 
+                                            
+                                            placeholder="Select task priority" />
 										</SelectTrigger>
 										<SelectContent>
 											<SelectItem value="HIGH">
@@ -134,6 +137,8 @@ const TaskModal = ({ onSubmit }: {onSubmit: SubmitHandler<FieldValues>}) => {
 											>
 												{field.value ? (
 													format(field.value, "PPP")
+												) : task?.deadline? (
+													format(task?.deadline, "PPPP")
 												) : (
 													<span>Pick a deadline</span>
 												)}

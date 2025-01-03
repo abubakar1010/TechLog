@@ -1,23 +1,26 @@
-import { Button } from "@/components/ui/button";
+
 import {
-	Dialog,
 	DialogContent,
 	DialogDescription,
 	DialogHeader,
 	DialogTitle,
-	DialogTrigger,
 } from "@/components/ui/dialog";
 
 import { FieldValues, SubmitHandler } from "react-hook-form";
 
 import { toast } from "@/hooks/use-toast";
-import { useAppDispatch } from "@/redux/app/hooks";
-import { addTask } from "@/redux/features/todo/todoSlice";
-import { TDraftTask } from "@/types";
+import { useAppDispatch, useAppSelector } from "@/redux/app/hooks";
+import { selectTasks, updateTask } from "@/redux/features/todo/todoSlice";
+import { TDraftTask, TTask } from "@/types";
 import TaskModal from "./TaskModal";
 
-export function AddTaskModal() {
-	// const {toast} = useToast()
+type TPropsType = {id: string}
+export function UpdateTaskModal({id}: TPropsType) {
+
+    const tasks= useAppSelector(selectTasks)
+
+    const task = tasks.find( task => task.id === id) as TTask
+
 
 	const dispatch = useAppDispatch();
 
@@ -32,25 +35,26 @@ export function AddTaskModal() {
 				</pre>
 			),
 		});
-
-		dispatch(addTask(value as TDraftTask));
+        const newValue = Object.fromEntries(
+            Object.entries(value).filter(([, val]) => typeof val !== "undefined")
+          ) as Record<string, Partial<TDraftTask>>;
+        const taskData = {...task,...newValue, id}
+        // console.log(taskData)
+		dispatch(updateTask( taskData as TDraftTask & Pick<TTask, "isComplete" | "id">));
 	};
 	return (
-		<Dialog>
-			<DialogTrigger asChild>
-				<Button>Add Task</Button>
-			</DialogTrigger>
+			
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
-					<DialogTitle>Add a new task</DialogTitle>
+					<DialogTitle>Update your task</DialogTitle>
 					<DialogDescription>
 						Set a new goal and make sure to save it.
 					</DialogDescription>
 				</DialogHeader>
 				<div>
-					<TaskModal task={null} onSubmit={onSubmit} />
+					<TaskModal onSubmit={onSubmit} task={task} />
 				</div>
 			</DialogContent>
-		</Dialog>
+
 	);
 }

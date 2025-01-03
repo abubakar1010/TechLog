@@ -41,7 +41,7 @@ const initialState: Todo = {
 const createTask = (actionData: TDraftTask): TTask => ({
 	...actionData,
 	id: nanoid(),
-	isComplete: true,
+	isComplete: false,
 });
 
 const todoSlice = createSlice({
@@ -56,20 +56,39 @@ const todoSlice = createSlice({
 			state.tasks.push(taskData);
 		},
 		isCompleteToggle(state, action: PayloadAction<string>) {
-			 state.tasks.forEach((task) =>
+			state.tasks.forEach((task) =>
 				task.id === action.payload
 					? (task.isComplete = !task.isComplete)
 					: task
 			);
 		},
 		deleteTask(state, action: PayloadAction<string>) {
-			state.tasks = state.tasks.filter((task) => task.id !== action.payload
+			state.tasks = state.tasks.filter(
+				(task) => task.id !== action.payload
 			);
-		}
+		},
+
+		// mutation issue
+
+		// updateTask(state, action: PayloadAction<TDraftTask & Pick<TTask, "id" | "isComplete">>) {
+		// 	state.tasks.forEach((task) =>
+		// 		task.id === action.payload.id
+		// 			? (task = {...action.payload})
+		// 			: task
+		// 	);
+		// },
+
+		updateTask(state, action: PayloadAction<TDraftTask & Pick<TTask, "id" | "isComplete">>) {
+			state.tasks = state.tasks.map((task) =>
+				task.id === action.payload.id
+					?  {...action.payload}
+					: task
+			);
+		},
 	},
 });
 
-export const { addTask, isCompleteToggle, deleteTask } = todoSlice.actions;
+export const { addTask, isCompleteToggle, deleteTask, updateTask } = todoSlice.actions;
 
 export const selectTasks = (state: RootState) => state.todos.tasks;
 
