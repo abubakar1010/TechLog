@@ -1,6 +1,7 @@
 import App from "@/App";
 import Login from "@/pages/Login";
 import Todos from "@/pages/Todos";
+import User from "@/pages/User";
 import { createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -11,6 +12,10 @@ const router = createBrowserRouter([
             {
                 index: true,
                 element: <Todos />
+            },
+            {
+                path: "/users",
+                element: <User />
             },
             {
                 path: "login",

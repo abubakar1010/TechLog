@@ -8,7 +8,7 @@ const Navbar = () => {
             <img src="./icon.svg" alt="" />
             <ul className=" flex gap-3 text-lg">
                 <Link to="/">Todos</Link>
-                <Link to="/">Backlog</Link>
+                <Link to="/users">Users</Link>
                 <Link to="/login">Login</Link>
             </ul>
             </div>
