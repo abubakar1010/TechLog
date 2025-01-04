@@ -29,11 +29,20 @@ import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { TTask } from "@/types";
+import { TTask, TUser } from "@/types";
+import { useAppSelector } from "@/redux/app/hooks";
+import { selectUser } from "@/redux/features/user/userSlice";
 
-
-const TaskModal = ({ onSubmit, task }: {onSubmit: SubmitHandler<FieldValues>, task: TTask | null}) => {
+const TaskModal = ({
+	onSubmit,
+	task,
+}: {
+	onSubmit: SubmitHandler<FieldValues>;
+	task: TTask | null;
+}) => {
 	const form = useForm();
+
+	const users = useAppSelector(selectUser()) as TUser[];
 
 	return (
 		<div className="">
@@ -52,7 +61,7 @@ const TaskModal = ({ onSubmit, task }: {onSubmit: SubmitHandler<FieldValues>, ta
 									<Input
 										placeholder="Task Title"
 										{...field}
-										value={ field.value ?? task?.title}
+										value={field.value ?? task?.title}
 									/>
 								</FormControl>
 								<FormDescription className=" sr-only">
@@ -94,9 +103,7 @@ const TaskModal = ({ onSubmit, task }: {onSubmit: SubmitHandler<FieldValues>, ta
 										value={field.value ?? task?.priority}
 									>
 										<SelectTrigger className="">
-											<SelectValue 
-                                            
-                                            placeholder="Select task priority" />
+											<SelectValue placeholder="Select task priority" />
 										</SelectTrigger>
 										<SelectContent>
 											<SelectItem value="HIGH">
@@ -137,8 +144,11 @@ const TaskModal = ({ onSubmit, task }: {onSubmit: SubmitHandler<FieldValues>, ta
 											>
 												{field.value ? (
 													format(field.value, "PPP")
-												) : task?.deadline? (
-													format(task?.deadline, "PPPP")
+												) : task?.deadline ? (
+													format(
+														task?.deadline,
+														"PPPP"
+													)
 												) : (
 													<span>Pick a deadline</span>
 												)}
@@ -162,6 +172,38 @@ const TaskModal = ({ onSubmit, task }: {onSubmit: SubmitHandler<FieldValues>, ta
 									</PopoverContent>
 								</Popover>
 
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name="user"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>User</FormLabel>
+								<FormControl>
+									<Select
+										onValueChange={field.onChange}
+										value={field.value ?? task?.priority}
+									>
+										<SelectTrigger className="">
+											<SelectValue placeholder="Assigned task to user" />
+										</SelectTrigger>
+										<SelectContent>
+											{users.map((user) => (
+												<>
+													<SelectItem value={user.id}>
+														{user.name}
+													</SelectItem>
+												</>
+											))}
+										</SelectContent>
+									</Select>
+								</FormControl>
+								<FormDescription className=" sr-only">
+									Assigned task to user
+								</FormDescription>
 								<FormMessage />
 							</FormItem>
 						)}

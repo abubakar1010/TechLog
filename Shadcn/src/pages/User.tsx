@@ -1,14 +1,14 @@
+import UserCard from "@/components/modules/user/UserCard";
 import { useAppSelector } from "@/redux/app/hooks";
 import { selectUser } from "@/redux/features/user/userSlice";
+import { TUser } from "@/types";
 
 const User = () => {
-    const users = useAppSelector(selectUser)
+    const users = useAppSelector(selectUser()) as TUser[] 
     return (
         <div className=" grid grid-cols-3 gap-12 w-[920px]">
             {users.map( user => <>
-            <div className=" bg-gray-600 flex justify-center items-center min-h-[120px]">
-                <h1>{user.name}</h1>
-            </div>
+            <UserCard user={user} />
             </>)}
         </div>
     );

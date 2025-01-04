@@ -3,18 +3,21 @@ import { Trash2, Calendar, EditIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { TTask } from "@/types";
+import { TTask, TUser } from "@/types";
 import { cn } from "@/lib/utils";
-import { useAppDispatch } from "@/redux/app/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/app/hooks";
 import { deleteTask, isCompleteToggle } from "@/redux/features/todo/todoSlice";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { UpdateTaskModal } from "./updateTaskModal";
+import { UpdateTaskModal } from "./UpdateTaskModal";
+import { selectUser } from "@/redux/features/user/userSlice";
 
 type TProps = {
 	task: TTask;
 };
 
 export function TodoCard({ task }: TProps) {
+
+	const user = useAppSelector(selectUser(task.user)) as TUser
 	const dispatch = useAppDispatch();
 	return (
 		<Card className="w-full">
@@ -31,24 +34,27 @@ export function TodoCard({ task }: TProps) {
 						)}
 					/>
 					<div className="space-y-4">
-						<div className="flex items-center space-x-2">
-							<Checkbox
-								id="task"
-								checked={task.isComplete}
-								onCheckedChange={() =>
-									dispatch(isCompleteToggle(task.id))
-								}
-							/>
-							<label
-								htmlFor="task"
-								className={`font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${
-									task.isComplete
-										? "line-through text-gray-500"
-										: ""
-								}`}
-							>
-								{task.title}
-							</label>
+						<div className=" flex justify-between items-center">
+							<div className="flex items-center space-x-2">
+								<Checkbox
+									id="task"
+									checked={task.isComplete}
+									onCheckedChange={() =>
+										dispatch(isCompleteToggle(task.id))
+									}
+								/>
+								<label
+									htmlFor="task"
+									className={`font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${
+										task.isComplete
+											? "line-through text-gray-500"
+											: ""
+									}`}
+								>
+									{task.title}
+								</label>
+							</div>
+							<p>{user.name? user.name : "No user"}</p>
 						</div>
 						<p className="text-sm text-gray-500">
 							{task.description}
@@ -63,17 +69,17 @@ export function TodoCard({ task }: TProps) {
 				</div>
 				<div className=" space-x-4">
 					<Dialog>
-          <DialogTrigger asChild>
-						<Button
-							variant="outline"
-							className=" bg-blue-500 text-white"
-							size="icon"
-						>
-							<EditIcon className="h-4 w-4" />
-						</Button>
-					</DialogTrigger>
-          <UpdateTaskModal id={task.id} />
-          </Dialog>
+						<DialogTrigger asChild>
+							<Button
+								variant="outline"
+								className=" bg-blue-500 text-white"
+								size="icon"
+							>
+								<EditIcon className="h-4 w-4" />
+							</Button>
+						</DialogTrigger>
+						<UpdateTaskModal id={task.id} />
+					</Dialog>
 
 					<Button
 						onClick={() => dispatch(deleteTask(task.id))}

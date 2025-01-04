@@ -32,6 +32,9 @@ const userSlice = createSlice(
 
 export const {addUser} = userSlice.actions;
 
-export const selectUser =  (state: RootState) => state.users
+export const selectUser = (userId: string | null = null) =>  (state: RootState) => {
+    if(userId) return state.users.find( user => user.id === userId)
+        return state.users
+}
 
 export const userReducer = userSlice.reducer;
