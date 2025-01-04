@@ -12,3 +12,9 @@ export type TDraftTask = Omit<TTask, "id" | "isComplete">
 
 export type TFilter = "ALL" | TTask["priority"]
 
+
+
+export type TUser = {
+    id: string;
+    name: string;
+}
