@@ -5,7 +5,7 @@ export type TTask = {
     description: string;
     isComplete: boolean;
     priority: "HIGH" | "LOW" | "MEDIUM";
-    user?: string;
+    user?: string | null;
 }
 
 export type TDraftTask = Omit<TTask, "id" | "isComplete">

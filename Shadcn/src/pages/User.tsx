@@ -5,11 +5,12 @@ import { TUser } from "@/types";
 
 const User = () => {
     const users = useAppSelector(selectUser()) as TUser[] 
+    console.log(users)
     return (
         <div className=" grid grid-cols-3 gap-12 w-[920px]">
-            {users.map( user => <>
-            <UserCard user={user} />
-            </>)}
+            {users.map( user => 
+            <UserCard key={user.id} user={user} />
+            )}
         </div>
     );
 };

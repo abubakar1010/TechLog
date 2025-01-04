@@ -1,6 +1,7 @@
 import { RootState } from "@/redux/app/store";
 import { TDraftTask, TFilter, TTask } from "@/types";
 import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
+import { removeUser } from "../user/userSlice";
 
 type Todo = {
 	tasks: TTask[];
@@ -92,6 +93,11 @@ const todoSlice = createSlice({
 			state.filter = action.payload;
 		},
 	},
+	extraReducers(builder){
+		builder.addCase(removeUser, (state, action) => {
+			state.tasks.forEach( task => task.user === action.payload? task.user = null : task)
+		})
+	}
 });
 
 export const { addTask, isCompleteToggle, deleteTask, updateTask, filterTask } =
