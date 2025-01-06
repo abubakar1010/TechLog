@@ -4,14 +4,25 @@ export const todoApiSlice = createApi(
     {
         reducerPath: "api",
         baseQuery: fetchBaseQuery({baseUrl: "http://localhost:5000/api"}),
+        tagTypes: ["task"],
         endpoints(builder) {
             return{
                 getTasks: builder.query({
-                    query: () => "/tasks"
-                })
+                    query: () => "/tasks",
+                    providesTags: ["task"]
+                }),
+                createTask: builder.mutation({
+                    query: (taskData) => ({
+                        method: "POST",
+                        url: "/tasks",
+                        body: taskData
+                        
+                    }),
+                    invalidatesTags: ["task"]
+                }),
             }
         },
     }
 )
 
-export const {useGetTasksQuery} = todoApiSlice
+export const {useGetTasksQuery, useCreateTaskMutation} = todoApiSlice

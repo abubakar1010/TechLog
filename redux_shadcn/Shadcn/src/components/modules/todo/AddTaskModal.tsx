@@ -11,15 +11,15 @@ import {
 import { FieldValues, SubmitHandler } from "react-hook-form";
 
 import { toast } from "@/hooks/use-toast";
-import { useAppDispatch } from "@/redux/app/hooks";
-import { addTask } from "@/redux/features/todo/todoSlice";
-import { TDraftTask } from "@/types";
 import TaskModal from "./TaskModal";
+import { useCreateTaskMutation } from "@/redux/features/todo/todoApiSlice";
 
 export function AddTaskModal() {
 	// const {toast} = useToast()
 
-	const dispatch = useAppDispatch();
+	// const dispatch = useAppDispatch();
+
+	const [createTask] = useCreateTaskMutation()
 
 	const onSubmit: SubmitHandler<FieldValues> = (value) => {
 		toast({
@@ -33,7 +33,10 @@ export function AddTaskModal() {
 			),
 		});
 
-		dispatch(addTask(value as TDraftTask));
+		
+
+		// dispatch(addTask(value as TDraftTask));
+		createTask({...value,isComplete: false,})
 	};
 	return (
 		<Dialog>

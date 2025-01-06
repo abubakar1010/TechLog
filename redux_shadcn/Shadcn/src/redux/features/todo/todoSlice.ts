@@ -12,7 +12,7 @@ const initialState: Todo = {
 	tasks: [
 		{
 			id: nanoid(),
-			deadline: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+			dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
 			title: "Complete University Management Project",
 			description:
 				"Define project requirement, analyze requirement, choose technology according to requirement.Focus on functional requirement",
@@ -21,7 +21,7 @@ const initialState: Todo = {
 		},
 		{
 			id: nanoid(),
-			deadline: new Date(Date.now() + 8 * 24 * 60 * 60 * 1000),
+			dueDate: new Date(Date.now() + 8 * 24 * 60 * 60 * 1000),
 			title: "Start the project",
 			description:
 				"first took a pattern for maintain your project. Design database and more",
@@ -30,7 +30,7 @@ const initialState: Todo = {
 		},
 		{
 			id: nanoid(),
-			deadline: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
+			dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
 			title: "Take look on non functional requirement",
 			description:
 				"At the beginning you should non functional attribute like performance, security, usability, reliability, scalability, maintainability, portability",
@@ -38,7 +38,7 @@ const initialState: Todo = {
 			priority: "MEDIUM",
 		},
 	],
-	filter: "ALL"
+	filter: "ALL",
 };
 
 const createTask = (actionData: TDraftTask): TTask => ({
@@ -93,21 +93,24 @@ const todoSlice = createSlice({
 			state.filter = action.payload;
 		},
 	},
-	extraReducers(builder){
+	extraReducers(builder) {
 		builder.addCase(removeUser, (state, action) => {
-			state.tasks.forEach( task => task.user === action.payload? task.user = null : task)
-		})
-	}
+			state.tasks.forEach((task) =>
+				task.member === action.payload ? (task.member = null) : task
+			);
+		});
+	},
 });
 
 export const { addTask, isCompleteToggle, deleteTask, updateTask, filterTask } =
 	todoSlice.actions;
 
 export const selectTasks = (state: RootState) => {
-	if(state.todos.filter === "ALL") return state.todos.tasks
-	return state.todos.tasks.filter((task) => task.priority === state.todos.filter);
-}
-	
+	if (state.todos.filter === "ALL") return state.todos.tasks;
+	return state.todos.tasks.filter(
+		(task) => task.priority === state.todos.filter
+	);
+};
 
 const todoReducer = todoSlice.reducer;
 

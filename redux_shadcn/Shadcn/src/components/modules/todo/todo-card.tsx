@@ -16,8 +16,7 @@ type TProps = {
 };
 
 export function TodoCard({ task }: TProps) {
-
-	const user = useAppSelector(selectUser(task.user)) as TUser
+	const user = useAppSelector(selectUser(task.member)) as TUser;
 	const dispatch = useAppDispatch();
 	return (
 		<Card className="w-full">
@@ -54,7 +53,7 @@ export function TodoCard({ task }: TProps) {
 									{task.title}
 								</label>
 							</div>
-							<p>{user.name? user.name : "No user"}</p>
+							<p>{user.name ? user.name : "No user"}</p>
 						</div>
 						<p className="text-sm text-gray-500">
 							{task.description}
@@ -65,7 +64,7 @@ export function TodoCard({ task }: TProps) {
 			<CardFooter className="flex justify-between items-center px-6 py-4 ">
 				<div className="flex items-center text-sm ">
 					<Calendar className="mr-2 h-4 w-4" />
-					<span>Deadline: {task.deadline.toDateString()}</span>
+					<span>Deadline: {new Date(task.dueDate).toDateString()}</span>
 				</div>
 				<div className=" space-x-4">
 					<Dialog>

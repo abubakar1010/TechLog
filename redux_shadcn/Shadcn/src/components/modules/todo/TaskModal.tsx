@@ -127,10 +127,10 @@ const TaskModal = ({
 					/>
 					<FormField
 						control={form.control}
-						name="deadline"
+						name="dueDate"
 						render={({ field }) => (
 							<FormItem className="flex flex-col">
-								<FormLabel>DeadLine</FormLabel>
+								<FormLabel>Due Date</FormLabel>
 								<Popover>
 									<PopoverTrigger asChild>
 										<FormControl>
@@ -144,9 +144,9 @@ const TaskModal = ({
 											>
 												{field.value ? (
 													format(field.value, "PPP")
-												) : task?.deadline ? (
+												) : task?.dueDate ? (
 													format(
-														task?.deadline,
+														task?.dueDate,
 														"PPPP"
 													)
 												) : (
