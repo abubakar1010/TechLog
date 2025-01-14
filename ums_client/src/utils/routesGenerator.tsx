@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { TSource } from "../routes/adminRoutes";
+import { TSource } from "../routes/types";
 
 
 

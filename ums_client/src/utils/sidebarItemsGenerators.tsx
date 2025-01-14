@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import { TSource } from "../routes/adminRoutes";
 import { NavLink } from "react-router-dom";
+import { TSource } from "../routes/types";
 
 type TAdminSidebar = {
 	key: string;
