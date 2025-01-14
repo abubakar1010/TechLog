@@ -1,40 +1,15 @@
-import {
-	UploadOutlined,
-	UserOutlined,
-	VideoCameraOutlined,
-} from "@ant-design/icons";
+
 import { Layout, Menu } from "antd";
-import { createElement, FC } from "react";
+import { FC } from "react";
+import { Outlet } from "react-router-dom";
+import { adminSidebar } from "../../routes/adminRoutes";
 
 const {Header, Content, Footer, Sider } = Layout;
 
-const items = [
-	{
-    icon: UserOutlined,
-    label: "Dashboard"
-  },
-	{
-    icon: VideoCameraOutlined,
-    label: "User Management"
-  },
-	{
-    icon: UploadOutlined,
-    label: "Analytics"
-  },
-	{
-    icon: UserOutlined,
-    label: "Performance"
-  },
-].map((item, index) => ({
-	key: String(index + 1),
-	icon: createElement(item.icon),
-	label: `${item.label}`,
-}));
+
 
 export const MainLayout: FC = () => {
-	// const {
-	// 	token: { colorBgContainer, borderRadiusLG },
-	// } = theme.useToken();
+
 
 	return (
 		<Layout style={{minHeight: "100vh"}}>
@@ -55,7 +30,7 @@ export const MainLayout: FC = () => {
 					theme="dark"
 					mode="inline"
 					defaultSelectedKeys={["4"]}
-					items={items}
+					items={adminSidebar}
 				/>
 			</Sider>
 			<Layout>
@@ -67,7 +42,7 @@ export const MainLayout: FC = () => {
 							minHeight: "",
 						}}
 					>
-						content
+						<Outlet />
 					</div>
 				</Content>
 				<Footer style={{ textAlign: "center" }}>
