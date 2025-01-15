@@ -39,9 +39,15 @@ const Login = () => {
 			});
 		}
 	};
+
+	const defaultValue = {
+		id: "A-0001",
+		password: "admin123"
+	}
+
 	return (
 		<Row justify={"center"} align={"middle"}  style={{height: "100vh"}}>
-			<FormContainer onSubmit={onSubmit}>
+			<FormContainer onSubmit={onSubmit} defaultValues={defaultValue}>
 				<FormInput
 					type="text"
 					identifier="id"
