@@ -35,7 +35,7 @@ export const Sidebar = () => {
 			<Sider
 				breakpoint="lg"
 				collapsedWidth="0"
-				
+				style={{height: "100vh", position: "sticky", top: "0"}}
 			>
 				<h1
 					style={{
