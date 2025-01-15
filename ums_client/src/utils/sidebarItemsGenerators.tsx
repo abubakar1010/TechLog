@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { NavLink } from "react-router-dom";
 import { TSource } from "../routes/types";
 
-type TAdminSidebar = {
+export type TAdminSidebar = {
 	key: string;
 	label: ReactNode;
 	children?: TAdminSidebar[];
