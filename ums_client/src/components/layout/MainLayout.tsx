@@ -20,10 +20,10 @@ export const MainLayout: FC = () => {
 	}
 
 	return (
-		<Layout style={{minHeight: "100vh"}}>
+		<Layout style={{minHeight: "100%"}}>
 			<Sidebar />
 			<Layout>
-				<Header style={{textAlign: "right"}} >
+				<Header style={{textAlign: "right", position: "sticky", top: "0"}} >
 					<Button onClick={handleLogout}>Logout</Button>
 				</Header>
 				<Content style={{ margin: "24px 16px 0" }}>

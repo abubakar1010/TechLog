@@ -7,7 +7,7 @@ import { setUser, TUSer } from "../redux/features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { FormContainer } from "../components/form/FormContainer";
-import { FormInput } from "../components/form/FormInput";
+import { FormInput } from "../components/ui/FormInput";
 
 const Login = () => {
 	const dispatch = useAppDispatch();
@@ -42,11 +42,11 @@ const Login = () => {
 
 	const defaultValue = {
 		id: "A-0001",
-		password: "admin123"
-	}
+		password: "admin123",
+	};
 
 	return (
-		<Row justify={"center"} align={"middle"}  style={{height: "100vh"}}>
+		<Row justify={"center"} align={"middle"} style={{ height: "100vh" }}>
 			<FormContainer onSubmit={onSubmit} defaultValues={defaultValue}>
 				<FormInput
 					type="text"
