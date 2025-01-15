@@ -1,4 +1,4 @@
-import { Input } from "antd";
+import { Form, Input } from "antd";
 import { Controller } from "react-hook-form";
 
 export const FormInput = ({
@@ -11,18 +11,13 @@ export const FormInput = ({
 	placeholder: string;
 }) => {
 	return (
-		<div style={{ marginBottom: "10px"}}>
-			<label  htmlFor={identifier}>{placeholder}</label>
+		<div style={{ marginBottom: "10px" }}>
 			<Controller
 				name={identifier}
 				render={({ field }) => (
-					<Input
-						{...field}
-                        style={{ margin: "7px"}}
-						type={type}
-						placeholder={placeholder}
-						id={identifier}
-					/>
+					<Form.Item label={identifier.toUpperCase()}>
+						<Input {...field} size="large" type={type} placeholder={placeholder} />
+					</Form.Item>
 				)}
 			/>
 		</div>
