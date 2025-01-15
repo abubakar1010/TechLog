@@ -1,26 +1,18 @@
-import { Button } from "antd";
-import { FieldValues, useForm } from "react-hook-form";
+import { Button, Row } from "antd";
+import { FieldValues } from "react-hook-form";
 import { useLoginMutation } from "../redux/features/auth/authApi";
 import { decodeToken } from "../utils/decodeToken";
 import { useAppDispatch } from "../redux/hooks";
 import { setUser, TUSer } from "../redux/features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { FormContainer } from "../components/form/FormContainer";
+import { FormInput } from "../components/form/FormInput";
 
 const Login = () => {
 	const dispatch = useAppDispatch();
 
-	const { register, handleSubmit } = useForm({
-		defaultValues: {
-			id: "A-0001",
-			password: "admin123",
-		},
-	});
-
-	const [login, { data, error }] = useLoginMutation();
-
-	console.log("data ==> ", data);
-	console.log("error ==> ", error);
+	const [login] = useLoginMutation();
 
 	const navigate = useNavigate();
 
@@ -41,24 +33,30 @@ const Login = () => {
 				duration: 2000,
 			});
 		} catch (err: unknown) {
-            toast.error(`Oops!Something went wrong.${err}`, {
+			toast.error(`Oops!Something went wrong.${err}`, {
 				id: loadingId,
 				duration: 2000,
-			})
-        }
+			});
+		}
 	};
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
-			<div>
-				<label htmlFor="id">Id</label>
-				<input type="text" placeholder="Id" {...register("id")} />
-			</div>
-			<div>
-				<label htmlFor="password">Password</label>
-				<input type="text" placeholder="Id" {...register("password")} />
-			</div>
-			<Button htmlType="submit">Submit</Button>
-		</form>
+		<Row justify={"center"} align={"middle"}  style={{height: "100vh"}}>
+			<FormContainer onSubmit={onSubmit}>
+				<FormInput
+					type="text"
+					identifier="id"
+					placeholder="Enter your Id"
+				/>
+
+				<FormInput
+					type="text"
+					identifier="password"
+					placeholder="Enter your Password"
+				/>
+
+				<Button htmlType="submit">Submit</Button>
+			</FormContainer>
+		</Row>
 	);
 };
 
