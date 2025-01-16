@@ -13,9 +13,15 @@ export const FormDate = ({
 		<div>
 			<Controller
 				name={identifier}
-				render={({ field }) => (
+				render={({ field, fieldState: { error } }) => (
 					<Form.Item>
-						<RangePicker style={{width: "100%"}} placeholder={placeholder} {...field} picker="month" />
+						<RangePicker
+							style={{ width: "100%" }}
+							placeholder={placeholder}
+							{...field}
+							picker="month"
+						/>
+						{error && <small style={{ color: "red" }}>{error.message}</small>}
 					</Form.Item>
 				)}
 			/>

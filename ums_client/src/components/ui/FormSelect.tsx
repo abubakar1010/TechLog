@@ -5,7 +5,7 @@ export const FormSelect = ({ identifier, options, placeholder }: { identifier: s
 		<div>
 			<Controller
 				name={identifier}
-				render={({ field }) => (
+				render={({ field, fieldState: {error} }) => (
 					<Form.Item label={identifier}>
 						<Select
 							{...field}
@@ -14,6 +14,7 @@ export const FormSelect = ({ identifier, options, placeholder }: { identifier: s
 							options={options}
 							size="large"
 						/>
+						{error && <small style={{color: "red"}}>{error.message}</small>}
 					</Form.Item>
 				)}
 			/>
