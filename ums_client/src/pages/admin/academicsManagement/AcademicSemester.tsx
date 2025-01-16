@@ -1,6 +1,8 @@
 import { useGetAllAcademicSemesterQuery } from "../../../redux/features/admin/academicManagementApi";
 import { Table } from "antd";
 import type { TableColumnsType, TableProps } from "antd";
+import { useState } from "react";
+import { TParams } from "../../../types";
 
 type TDataType = {
 	key: string;
@@ -17,26 +19,16 @@ const columns: TableColumnsType<TDataType> = [
 		showSorterTooltip: { target: "full-header" },
 		filters: [
 			{
-				text: "Joe",
-				value: "Joe",
+				text: "Autumn",
+				value: "Autumn",
 			},
 			{
-				text: "Jim",
-				value: "Jim",
+				text: "Fall",
+				value: "Fall",
 			},
 			{
-				text: "Submenu",
-				value: "Submenu",
-				children: [
-					{
-						text: "Green",
-						value: "Green",
-					},
-					{
-						text: "Black",
-						value: "Black",
-					},
-				],
+				text: "Summer",
+				value: "Summer",
 			},
 		],
 		// specify the condition of filtering result
@@ -56,12 +48,52 @@ const columns: TableColumnsType<TDataType> = [
 		dataIndex: "startMonth",
 		filters: [
 			{
-				text: "London",
-				value: "London",
+				text: "January",
+				value: "January",
 			},
 			{
-				text: "New York",
-				value: "New York",
+				text: "February",
+				value: "February",
+			},
+			{
+				text: "March",
+				value: "March",
+			},
+			{
+				text: "April",
+				value: "April",
+			},
+			{
+				text: "May",
+				value: "May",
+			},
+			{
+				text: "June",
+				value: "June",
+			},
+			{
+				text: "July",
+				value: "July",
+			},
+			{
+				text: "August",
+				value: "August",
+			},
+			{
+				text: "September",
+				value: "September",
+			},
+			{
+				text: "October",
+				value: "October",
+			},
+			{
+				text: "November",
+				value: "November",
+			},
+			{
+				text: "December",
+				value: "December",
 			},
 		],
 		onFilter: (value, record) =>
@@ -72,31 +104,82 @@ const columns: TableColumnsType<TDataType> = [
 		dataIndex: "endMonth",
 		filters: [
 			{
-				text: "London",
-				value: "London",
+				text: "January",
+				value: "January",
 			},
 			{
-				text: "New York",
-				value: "New York",
+				text: "February",
+				value: "February",
+			},
+			{
+				text: "March",
+				value: "March",
+			},
+			{
+				text: "April",
+				value: "April",
+			},
+			{
+				text: "May",
+				value: "May",
+			},
+			{
+				text: "June",
+				value: "June",
+			},
+			{
+				text: "July",
+				value: "July",
+			},
+			{
+				text: "August",
+				value: "August",
+			},
+			{
+				text: "September",
+				value: "September",
+			},
+			{
+				text: "October",
+				value: "October",
+			},
+			{
+				text: "November",
+				value: "November",
+			},
+			{
+				text: "December",
+				value: "December",
 			},
 		],
 		onFilter: (value, record) => record.endMonth.indexOf(value as string) === 0,
 	},
 ];
 
-const onChange: TableProps<TDataType>["onChange"] = (
-	pagination,
-	filters,
-	sorter,
-	extra
-) => {
-	console.log("params", pagination, filters, sorter, extra);
-};
-
 export const AcademicSemester = () => {
-	const { data: semesterData } = useGetAllAcademicSemesterQuery(undefined);
+	const [params, setParams] = useState<TParams[] | undefined>([]);
+	const { data: semesterData, isFetching } = useGetAllAcademicSemesterQuery(params);
 
-	console.log(semesterData);
+	const onChange: TableProps<TDataType>["onChange"] = (
+		pagination,
+		filters,
+		sorter,
+		extra
+	) => {
+		if (extra.action === "filter") {
+			const queryParams: TParams[] = [];
+			filters.name?.forEach((item) => {
+				queryParams.push({ name: "name", value: item });
+			});
+			filters.startMonth?.forEach((item) => {
+				queryParams.push({ name: "startMonth", value: item });
+			});
+			filters.endMonth?.forEach((item) => {
+				queryParams.push({ name: "endMonth", value: item });
+			});
+			setParams(queryParams);
+		}
+	};
 
 	const data = semesterData?.data?.map(
 		({ _id, name, year, startMonth, endMonth }) => ({
@@ -111,6 +194,7 @@ export const AcademicSemester = () => {
 	return (
 		<div>
 			<Table<TDataType>
+				loading={isFetching}
 				columns={columns}
 				dataSource={data}
 				onChange={onChange}
