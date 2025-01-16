@@ -19,10 +19,9 @@ export const CreateAcademicSemester = () => {
 
 	const onSubmit = (data: FieldValues) => {
 		const name = options[Number(data.name) - 1].label;
+		console.log(data)
 
 		const option = { year: "numeric", month: "short" };
-
-		console.log();
 
 		const year = String(data.date[0].$y);
 		const startMonth = data.date[0].$d
@@ -38,7 +37,7 @@ export const CreateAcademicSemester = () => {
 			startMonth,
 			endMonth,
 		};
-		console.log(semesterData, data);
+		console.log(semesterData);
 	};
 
 	return (
