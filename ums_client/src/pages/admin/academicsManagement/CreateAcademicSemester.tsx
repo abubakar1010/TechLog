@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FieldValues } from "react-hook-form";
 import { FormContainer } from "../../../components/form/FormContainer";
 import { Button, Col, Flex, Form } from "antd";
@@ -5,6 +6,9 @@ import { FormSelect } from "../../../components/ui/FormSelect";
 import { FormDate } from "../../../components/ui/FormDate";
 import {zodResolver} from '@hookform/resolvers/zod'
 import { academicSemesterSchema } from "../../../schemas/academicSemesterSchema";
+import { useCreateAcademicSemesterMutation } from "../../../redux/features/admin/academicManagementApi";
+import { toast } from "sonner";
+import { TResponse } from "../../../types";
 
 
 const options = [
@@ -15,13 +19,12 @@ const options = [
 
 export const CreateAcademicSemester = () => {
 
+	const [createAcademicSemester] = useCreateAcademicSemesterMutation()
 
 
-	const onSubmit = (data: FieldValues) => {
+	const onSubmit = async(data: FieldValues) => {
 		const name = options[Number(data.name) - 1].label;
-		console.log(data)
-
-		const option = { year: "numeric", month: "short" };
+		const option = { year: "numeric", month: "long" };
 
 		const year = String(data.date[0].$y);
 		const startMonth = data.date[0].$d
@@ -37,7 +40,18 @@ export const CreateAcademicSemester = () => {
 			startMonth,
 			endMonth,
 		};
-		console.log(semesterData);
+		try {
+			const res = await createAcademicSemester(semesterData) as TResponse
+			if(res.error){
+				toast.error(res.error.data.message)
+			}
+			else{
+				toast.success(res.data.message)
+			}
+			console.log(res)
+		} catch (error: any) {
+			toast.error(error.message)
+		}
 	};
 
 	return (
