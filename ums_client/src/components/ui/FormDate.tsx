@@ -6,20 +6,21 @@ export const FormDate = ({
 	placeholder,
 }: {
 	identifier: string;
-	placeholder: [string, string];
+	placeholder: string;
 }) => {
-	const { RangePicker } = DatePicker;
+	const dateFormat = "YYYY/MM/DD";
 	return (
 		<div>
 			<Controller
 				name={identifier}
 				render={({ field, fieldState: { error } }) => (
 					<Form.Item>
-						<RangePicker
+						<DatePicker
+							
+							format={dateFormat}
 							style={{ width: "100%" }}
 							placeholder={placeholder}
 							{...field}
-							picker="month"
 						/>
 						{error && <small style={{ color: "red" }}>{error.message}</small>}
 					</Form.Item>
