@@ -1,7 +1,7 @@
 import { Divider, Form, Input } from "antd";
-import { FormInput } from "../../../../components/ui/FormInput";
-import { FormSelect } from "../../../../components/ui/FormSelect";
-import { FormDate } from "../../../../components/ui/FormDate";
+import { FormInput } from "../../../../../components/ui/FormInput";
+import { FormSelect } from "../../../../../components/ui/FormSelect";
+import { FormDate } from "../../../../../components/ui/FormDate";
 import { Controller } from "react-hook-form";
 
 export const PersonalInformation = () => {
@@ -25,13 +25,20 @@ export const PersonalInformation = () => {
 					placeholder="Enter Your First Name"
 					type="text"
 				/>
-				<Controller name="image" 
-				render={({field, fieldState: {error}}) => (
-					<Form.Item label={"Upload a image"}>
-						<Input {...field} size="large" type="file" placeholder={"Upload a image"} />
-						{error && <small style={{color: "red"}}>{error.message}</small>}
-					</Form.Item>
-				)} />
+				<Controller
+					name="image"
+					render={({ field, fieldState: { error } }) => (
+						<Form.Item label={"Upload a image"}>
+							<Input
+								{...field}
+								size="large"
+								type="file"
+								placeholder={"Upload a image"}
+							/>
+							{error && <small style={{ color: "red" }}>{error.message}</small>}
+						</Form.Item>
+					)}
+				/>
 				<FormSelect
 					identifier="gender"
 					placeholder="Enter Your First Name"

@@ -1,5 +1,5 @@
 import { Divider } from "antd";
-import { FormInput } from "../../../../components/ui/FormInput";
+import { FormInput } from "../../../../../components/ui/FormInput";
 
 export const GuardianInformation = () => {
 	return (

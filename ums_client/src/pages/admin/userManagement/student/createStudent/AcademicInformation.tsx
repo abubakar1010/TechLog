@@ -1,6 +1,9 @@
 import { Divider } from "antd";
-import { useGetAllAcademicDepartmentQuery, useGetAllAcademicSemesterQuery } from "../../../../redux/features/admin/academicManagementApi";
-import { FormSelect } from "../../../../components/ui/FormSelect";
+import {
+	useGetAllAcademicDepartmentQuery,
+	useGetAllAcademicSemesterQuery,
+} from "../../../../../redux/features/admin/academicManagementApi";
+import { FormSelect } from "../../../../../components/ui/FormSelect";
 
 export const AcademicInformation = () => {
 	const { data: semesterData } = useGetAllAcademicSemesterQuery(undefined);
