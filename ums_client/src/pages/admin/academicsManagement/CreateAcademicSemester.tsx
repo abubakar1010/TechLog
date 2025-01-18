@@ -3,20 +3,14 @@ import { FieldValues } from "react-hook-form";
 import { FormContainer } from "../../../components/form/FormContainer";
 import { Button, Col, Flex, Form } from "antd";
 import { FormSelect } from "../../../components/ui/FormSelect";
-import { FormDate } from "../../../components/ui/FormDate";
+import { FormDateRange } from "../../../components/ui/FormDateRange";
 import {zodResolver} from '@hookform/resolvers/zod'
 import { academicSemesterSchema } from "../../../schemas/academicSemesterSchema";
 import { useCreateAcademicSemesterMutation } from "../../../redux/features/admin/academicManagementApi";
 import { toast } from "sonner";
 import { TResponse } from "../../../types";
 import { TAcademicSemester } from "../../../types/academicSemester.type";
-
-
-const options = [
-	{ value: "01", label: "Autumn" },
-	{ value: "02", label: "Summer" },
-	{ value: "03", label: "Fall" },
-];
+import { semesterOptions } from "../../../constant";
 
 export const CreateAcademicSemester = () => {
 
@@ -24,7 +18,7 @@ export const CreateAcademicSemester = () => {
 
 
 	const onSubmit = async(data: FieldValues) => {
-		const name = options[Number(data.name) - 1].label;
+		const name = semesterOptions[Number(data.name) - 1].label;
 		const option = { year: "numeric", month: "long" };
 
 		const year = String(data.date[0].$y);
@@ -66,9 +60,9 @@ export const CreateAcademicSemester = () => {
 						<FormSelect
 							placeholder="Enter Semester Name"
 							identifier="name"
-							options={options}
+							options={semesterOptions}
 						/>
-						<FormDate
+						<FormDateRange
 							identifier="date"
 							placeholder={["Semester Start", "Semester End"]}
 						/>
