@@ -1,4 +1,5 @@
-import { TParams } from "../../../types";
+import { TParams, TReduxResponse } from "../../../types";
+import { TStudent } from "../../../types/student.type";
 import { baseApi } from "../../api/baseApi";
 
 const userManagementApi = baseApi.injectEndpoints({
@@ -17,13 +18,21 @@ const userManagementApi = baseApi.injectEndpoints({
 					params.append(item.name, item.value as string)
 				);
 				return {
-					url: "/",
+					url: "/students",
 					method: "GET",
 					params,
+				};
+			},
+			transformResponse: (response: TReduxResponse<TStudent[]>) => {
+				console.log(response);
+				return {
+					data: response.data,
+					meta: response.meta,
 				};
 			},
 		}),
 	}),
 });
 
-export const { useCreateStudentMutation } = userManagementApi;
+export const { useCreateStudentMutation, useGetAllStudentQuery } =
+	userManagementApi;
