@@ -17,6 +17,10 @@ export type TStudent =  {
 	localGuardian: TLocalGuardian;
 	admissionSemester: string;
 	academicDepartment: string;
+	createdAt: string;
+	updatedAt: string;
+	__v: number;
+	_id: string;
 }
 
 export type TName =  {
