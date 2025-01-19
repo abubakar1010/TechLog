@@ -1,4 +1,6 @@
 import { TParams, TReduxResponse } from "../../../types";
+import { TAcademicDepartment } from "../../../types/academicDepartment.type";
+import { TAcademicFaculty } from "../../../types/academicFaculty.type";
 import { TAcademicSemester } from "../../../types/academicSemester.type";
 import { baseApi } from "../../api/baseApi";
 
@@ -44,6 +46,13 @@ const academicManagementApi = baseApi.injectEndpoints({
 					params,
 				};
 			},
+			transformResponse: (response: TReduxResponse<TAcademicFaculty[]>) => {
+				console.log(response);
+				return {
+					data: response.data,
+					meta: response.meta,
+				};
+			},
 		}),
 		createAcademicFaculty: builder.mutation({
 			query: (data) => ({
@@ -62,6 +71,13 @@ const academicManagementApi = baseApi.injectEndpoints({
 					url: "/academic-departments",
 					method: "GET",
 					params,
+				};
+			},
+			transformResponse: (response: TReduxResponse<TAcademicDepartment[]>) => {
+				console.log(response);
+				return {
+					data: response.data,
+					meta: response.meta,
 				};
 			},
 		}),
