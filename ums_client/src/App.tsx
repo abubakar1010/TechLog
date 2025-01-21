@@ -10,6 +10,7 @@ function App() {
     <ProtectedRoute>
     <MainLayout />
     </ProtectedRoute>
+
   )
 }
 
