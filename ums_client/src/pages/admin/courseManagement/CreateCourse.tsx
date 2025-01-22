@@ -4,7 +4,7 @@ import { FormContainer } from "../../../components/form/FormContainer";
 import { Button, Col, Flex, Form } from "antd";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { TResponse } from "../../../types";
+import { TError, TResponse } from "../../../types";
 import { CourseSchema } from "../../../schemas/courseSchema";
 import { useCreateCourseMutation, useGetAllCourseQuery } from "../../../redux/features/admin/courseManagementApi";
 import { defaultCourseData, TCourse } from "../../../types/course.type";
@@ -30,7 +30,10 @@ export const CreateCourse = () => {
 		}
 		console.log(newCourseData)
 		try {
-			const res = (await createCourse(newCourseData)) as TResponse<TCourse[]>;
+			const res = (await createCourse(newCourseData)) as  {
+				data: TResponse<TCourse[]>;
+				error?: TError;
+			};
 			if (res.error) {
 				toast.error(res.error.data.message);
 			} else {
