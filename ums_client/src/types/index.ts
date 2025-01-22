@@ -31,3 +31,9 @@ export type TParams = {
     name: string;
     value: boolean | React.Key;
 }
+
+export type TResponseDefault = {
+	_id: string;
+    createdAt: string;
+	updatedAt: string;
+}
