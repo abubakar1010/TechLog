@@ -1,7 +1,7 @@
 
 import { Button, Layout } from "antd";
 import { FC } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { Sidebar } from "../ui/Sidebar";
 import { useAppDispatch } from "../../redux/hooks";
 import { logout } from "../../redux/features/auth/authSlice";
@@ -13,9 +13,11 @@ const {Header, Content, Footer, } = Layout;
 
 export const MainLayout: FC = () => {
 
+	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
 	const handleLogout = () => {
 		dispatch(logout())
+		navigate("/login")
 		toast.success("Logout successful")
 	}
 

@@ -7,7 +7,7 @@ function App() {
   console.log("first")
 
   return (
-    <ProtectedRoute>
+    <ProtectedRoute role={undefined}>
     <MainLayout />
     </ProtectedRoute>
 

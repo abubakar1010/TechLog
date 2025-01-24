@@ -1,6 +1,6 @@
 import { OfferedCourse } from "../pages/faculty/courseManagement/OfferedCourse";
 import { FacultyDashboard } from "../pages/faculty/FacultyDashboard";
-import { Student } from "../pages/faculty/studentManagement/Student";
+import { ManageStudent } from "../pages/faculty/studentManagement/ManageStudent";
 
 export const facultyPaths = [
 	{
@@ -15,7 +15,7 @@ export const facultyPaths = [
 				name: "Offered Course",
 				path: "offered-course",
 				element: <OfferedCourse />,
-			}
+			},
 		],
 	},
 	{
@@ -24,8 +24,8 @@ export const facultyPaths = [
 			{
 				name: "Students",
 				path: "students",
-				element: <Student />,
-			}
+				element: <ManageStudent />,
+			},
 		],
 	},
 ];
