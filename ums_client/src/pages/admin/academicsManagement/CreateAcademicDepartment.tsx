@@ -10,40 +10,49 @@ import { TError, TResponse } from "../../../types";
 import { TAcademicDepartment } from "../../../types/academicDepartment.type";
 import { FormSelect } from "../../../components/ui/FormSelect";
 import { TAcademicFaculty } from "../../../types/academicFaculty.type";
-import { useCreateAcademicDepartmentMutation, useGetAllAcademicFacultyQuery } from "../../../redux/features/admin/academicManagementApi";
+import {
+	useCreateAcademicDepartmentMutation,
+	useGetAllAcademicFacultyQuery,
+} from "../../../redux/features/admin/academicManagementApi";
 
 export const CreateAcademicDepartment = () => {
+	const [createNewAcademicDepartment] = useCreateAcademicDepartmentMutation();
 
-	const [createNewAcademicDepartment] = useCreateAcademicDepartmentMutation()
+	const { data: academicFacultyData } =
+		useGetAllAcademicFacultyQuery(undefined);
 
-  const {data: academicFacultyData} = useGetAllAcademicFacultyQuery(undefined)
+	const academicFacultyOption = academicFacultyData?.data?.map(
+		(item: TAcademicFaculty) => ({
+			value: item._id,
+			label: item.name,
+		})
+	);
 
-  const academicFacultyOption = academicFacultyData?.data?.map( (item: TAcademicFaculty) => ({
-    value: item._id,
-    label: item.name
-  }))
-
-	const onSubmit = async(data: FieldValues) => {
+	const onSubmit = async (data: FieldValues) => {
 		const academicDepartmentData = {
 			name: data.name,
-      academicFaculty: data.academicFaculty
-		}
+			academicFaculty: data.academicFaculty,
+		};
 
-		console.log(academicDepartmentData)
+		console.log(academicDepartmentData);
 
 		try {
-			const res = await createNewAcademicDepartment(academicDepartmentData) as {data:TResponse<TAcademicDepartment>;error?:TError}
-			console.log(res)
-			if(res?.data) toast.success(res?.data.message)
-			if(res?.error) toast.success(res?.error?.data?.message)
+			const res = (await createNewAcademicDepartment(
+				academicDepartmentData
+			)) as { data: TResponse<TAcademicDepartment>; error?: TError };
+			console.log(res);
+			if (res?.data) toast.success(res?.data.message);
+			if (res?.error) toast.success(res?.error?.data?.message);
 		} catch (error: any) {
-			toast.error(error.message)
+			toast.error(error.message);
 		}
 	};
 
 	return (
 		<div>
-			<h1 style={{textAlign: "center", margin: "10px 0"}}>This is the CreateAcademicDepartment page</h1>
+			<h1 style={{ textAlign: "center", margin: "10px 0" }}>
+				This is the CreateAcademicDepartment page
+			</h1>
 			<Flex justify="center">
 				<Col span={8}>
 					<FormContainer
@@ -55,7 +64,11 @@ export const CreateAcademicDepartment = () => {
 							identifier="name"
 							placeholder="Enter Faculty Name"
 						/>
-            <FormSelect identifier="academicFaculty" placeholder="Select Academic Faculty" options={academicFacultyOption}  />
+						<FormSelect
+							identifier="academicFaculty"
+							placeholder="Select Academic Faculty"
+							options={academicFacultyOption!}
+						/>
 						<Button htmlType="submit">Submit</Button>
 					</FormContainer>
 				</Col>
