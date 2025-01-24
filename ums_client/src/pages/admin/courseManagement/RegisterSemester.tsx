@@ -4,11 +4,9 @@ import { FormContainer } from "../../../components/form/FormContainer";
 import { Button, Col, Flex, Form } from "antd";
 import { FormSelect } from "../../../components/ui/FormSelect";
 import { FormDateRange } from "../../../components/ui/FormDateRange";
-import {
-	useGetAllAcademicSemesterQuery,
-} from "../../../redux/features/admin/academicManagementApi";
+import { useGetAllAcademicSemesterQuery } from "../../../redux/features/admin/academicManagementApi";
 import { toast } from "sonner";
-import { TResponse } from "../../../types";
+import { TError, TResponse } from "../../../types";
 import { FormInput } from "../../../components/ui/FormInput";
 import { useRegisterSemesterMutation } from "../../../redux/features/admin/courseManagementApi";
 import { TRegisteredSemester } from "../../../types/registerSemester.type";
@@ -40,21 +38,22 @@ export const RegisterSemester = () => {
 		value: item._id,
 	}));
 	const onSubmit = async (data: FieldValues) => {
-		const startDate = new Date(data.date[0].$d).toISOString()
-		const endDate = new Date(data.date[1].$d).toISOString()
-		console.log(data)
+		const startDate = new Date(data.date[0].$d).toISOString();
+		const endDate = new Date(data.date[1].$d).toISOString();
+		console.log(data);
 		const newRegisteredSemesterData = {
 			academicSemester: data.academicSemester,
 			status: data.status,
 			startDate,
 			endDate,
 			minCredit: Number(data.minCredit),
-			maxCredit: Number(data.maxCredit)
-		}
+			maxCredit: Number(data.maxCredit),
+		};
 		try {
-			const res = (await registerSemester(newRegisteredSemesterData)) as TResponse<
-				TRegisteredSemester[]
-			>;
+			const res = (await registerSemester(newRegisteredSemesterData)) as {
+				data: TResponse<TRegisteredSemester[]>;
+				error?: TError;
+			};
 			if (res.error) {
 				toast.error(res.error.data.message);
 			} else {
