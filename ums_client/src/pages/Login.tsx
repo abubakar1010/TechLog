@@ -24,10 +24,15 @@ const Login = () => {
 				password: data.password,
 			};
 			const res = await login(credential).unwrap();
+
 			const user = decodeToken(res.data.accessToken) as TUSer;
 
 			dispatch(setUser({ user, token: res.data.accessToken }));
-			navigate(`/${user.role}/dashboard`);
+			if (res?.data?.needsPasswordChange) {
+				navigate("/change-password");
+			} else {
+				navigate(`/${user.role}/dashboard`);
+			}
 			toast.success("User login successful", {
 				id: loadingId,
 				duration: 2000,
@@ -48,11 +53,7 @@ const Login = () => {
 	return (
 		<Row justify={"center"} align={"middle"} style={{ height: "100vh" }}>
 			<FormContainer onSubmit={onSubmit} defaultValues={defaultValue}>
-				<FormInput
-					type="text"
-					identifier="id"
-					placeholder="Enter your Id"
-				/>
+				<FormInput type="text" identifier="id" placeholder="Enter your Id" />
 
 				<FormInput
 					type="text"
