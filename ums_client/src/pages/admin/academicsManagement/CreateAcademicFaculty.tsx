@@ -21,7 +21,6 @@ export const CreateAcademicFaculty = () => {
 
 		try {
 			const res = await createNewAcademicFaculty(academicFacultyData) as {data:TResponse<TAcademicFaculty>;error?:TError}
-			console.log(res)
 			if(res?.data) toast.success(res?.data.message)
 			if(res?.error) toast.success(res?.error?.data?.message)
 		} catch (error: any) {

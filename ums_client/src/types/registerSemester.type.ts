@@ -1,3 +1,5 @@
+import { TResponseDefault } from ".";
+
 export const defaultRegisterSemesterData = {
 	academicSemester: "65b0104110b74fcbd7a25d92",
 	status: "UPCOMING",
@@ -14,4 +16,4 @@ export type TRegisteredSemester = {
 	endDate: string;
 	minCredit: number;
 	maxCredit: number;
-};
+} & TResponseDefault;

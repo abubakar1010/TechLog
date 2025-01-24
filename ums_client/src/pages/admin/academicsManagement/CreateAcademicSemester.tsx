@@ -4,20 +4,18 @@ import { FormContainer } from "../../../components/form/FormContainer";
 import { Button, Col, Flex, Form } from "antd";
 import { FormSelect } from "../../../components/ui/FormSelect";
 import { FormDateRange } from "../../../components/ui/FormDateRange";
-import {zodResolver} from '@hookform/resolvers/zod'
+import { zodResolver } from "@hookform/resolvers/zod";
 import { academicSemesterSchema } from "../../../schemas/academicSemesterSchema";
 import { useCreateAcademicSemesterMutation } from "../../../redux/features/admin/academicManagementApi";
 import { toast } from "sonner";
-import { TResponse } from "../../../types";
+import { TError, TResponse } from "../../../types";
 import { TAcademicSemester } from "../../../types/academicSemester.type";
 import { semesterOptions } from "../../../constant";
 
 export const CreateAcademicSemester = () => {
+	const [createAcademicSemester] = useCreateAcademicSemesterMutation();
 
-	const [createAcademicSemester] = useCreateAcademicSemesterMutation()
-
-
-	const onSubmit = async(data: FieldValues) => {
+	const onSubmit = async (data: FieldValues) => {
 		const name = semesterOptions[Number(data.name) - 1].label;
 		const option = { year: "numeric", month: "long" };
 
@@ -36,16 +34,18 @@ export const CreateAcademicSemester = () => {
 			endMonth,
 		};
 		try {
-			const res = await createAcademicSemester(semesterData) as TResponse<TAcademicSemester[]>
-			if(res.error){
-				toast.error(res.error.data.message)
+			const res = (await createAcademicSemester(semesterData)) as {
+				data: TResponse<TAcademicSemester[]>;
+				error?: TError;
+			};
+			if (res.error) {
+				toast.error(res.error.data.message);
+			} else {
+				toast.success(res?.data?.message);
 			}
-			else{
-				toast.success(res?.message)
-			}
-			console.log(res)
+			console.log(res);
 		} catch (error: any) {
-			toast.error(error.message)
+			toast.error(error.message);
 		}
 	};
 
@@ -56,7 +56,10 @@ export const CreateAcademicSemester = () => {
 			</h1>
 			<Flex justify="center">
 				<Col span={12}>
-					<FormContainer onSubmit={onSubmit} resolver={zodResolver(academicSemesterSchema)}>
+					<FormContainer
+						onSubmit={onSubmit}
+						resolver={zodResolver(academicSemesterSchema)}
+					>
 						<FormSelect
 							placeholder="Enter Semester Name"
 							identifier="name"
