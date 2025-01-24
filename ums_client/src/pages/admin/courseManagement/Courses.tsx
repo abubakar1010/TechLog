@@ -4,6 +4,7 @@ import type { TableColumnsType, TableProps } from "antd";
 import { useState } from "react";
 import { TParams } from "../../../types";
 import { useGetAllCourseQuery } from "../../../redux/features/admin/courseManagementApi";
+import { DisplayModal } from "../../../components/ui/Modal";
 
 type TDataType = {
 	key: string;
@@ -16,23 +17,27 @@ const columns: TableColumnsType<TDataType> = [
 	{
 		title: "Title",
 		dataIndex: "title",
+		key: "title",
 		showSorterTooltip: { target: "full-header" }
 	},
 	{
 		title: "prefix",
+		key: "prefix",
 		dataIndex: "prefix",
 
 	},
 	{
 		title: "Code",
+		key: "code",
 		dataIndex: "code",
 	},
 	{
 		title: "Actions",
-		dataIndex: "X",
-		render: () => {
+		key: "X",
+		render: (item) => {
+			console.log(item)
 			return <div style={{display: "flex", gap: "12px"}}>
-				<Button>Assign Faculty</Button>
+				<DisplayModal courseId={item.key} />
 				<Button>Update</Button>
 				<Button>Delete</Button>
 			</div>
