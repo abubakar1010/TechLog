@@ -6,9 +6,9 @@ export const OfferedCourseSchema = z.object({
 	academicDepartment: z.string(),
 	course: z.string(),
 	faculty: z.string(),
-	section: z.number(),
-	maxCapacity: z.number(),
-	days: z.array(z.string()),
+	section: z.string(),
+	maxCapacity: z.string(),
+	days: z.string(),
 	startTime: z.string(),
 	endTime: z.string(),
 });

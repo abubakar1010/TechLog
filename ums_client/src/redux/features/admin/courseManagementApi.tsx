@@ -1,5 +1,6 @@
 import { TParams, TReduxResponse } from "../../../types";
 import { TCourse } from "../../../types/course.type";
+import { Faculty } from "../../../types/faculty";
 import { TOfferedCourse } from "../../../types/offerCourse.type";
 import { TRegisteredSemester } from "../../../types/registerSemester.type";
 import { baseApi } from "../../api/baseApi";
@@ -26,6 +27,30 @@ const courseManagementApi = baseApi.injectEndpoints({
                 };
             },
         }),
+        getCourseFaculty: builder.query({
+            query: (courseId) => {
+                return {
+                    url: `/courses/${courseId}/get-faculties`,
+                    method: "GET"
+                };
+            },
+            transformResponse: (response: TReduxResponse<Faculty[]>) => {
+                return {
+                    data: response.data,
+                    meta: response.meta,
+                };
+            },
+        }),
+        assignFaculty: builder.mutation({
+            query: (arg) => {
+                console.log("first", arg)
+                return {
+                    url: `/courses/${arg.courseId}/assign-faculties`,
+                    method: "PUT",
+                    body: arg.data,
+                }
+            },
+        }),
         createCourse: builder.mutation({
             query: (data) => ({
                 url: "/courses/create-course",
@@ -45,6 +70,7 @@ const courseManagementApi = baseApi.injectEndpoints({
                     params,
                 };
             },
+            providesTags: ["registeredSemester"],
             transformResponse: (response: TReduxResponse<TRegisteredSemester[]>) => {
                 return {
                     data: response.data,
@@ -58,6 +84,18 @@ const courseManagementApi = baseApi.injectEndpoints({
                 method: "POST",
                 body: data,
             }),
+            invalidatesTags: ["registeredSemester"]
+        }),
+        changeSemesterStatus: builder.mutation({
+            query: (arg) => {
+                console.log(arg)
+                return {
+                    url: `/semester-registrations/${arg.semesterId}`,
+                    method: "PATCH",
+                    body: arg.data,
+                }
+            },
+            invalidatesTags: ["registeredSemester"]
         }),
         getAllOfferedCourse: builder.query({
             query: (args = []) => {
@@ -94,5 +132,9 @@ export const {
     useGetAllOfferedCourseQuery,
     useCreateOfferCourseMutation,
     useGetAllRegisteredSemesterQuery,
-    useRegisterSemesterMutation
+    useRegisterSemesterMutation,
+    useAssignFacultyMutation,
+    useGetCourseFacultyQuery,
+    useChangeSemesterStatusMutation
+    
 } = courseManagementApi;
