@@ -116,6 +116,25 @@ const courseManagementApi = baseApi.injectEndpoints({
                 };
             },
         }),
+        getMyOfferedCourse: builder.query({
+            query: (args = []) => {
+                const params = new URLSearchParams();
+                args.forEach((item: TParams) =>
+                    params.append(item.name, item.value as string)
+                );
+                return {
+                    url: "offered-courses/my-offered-courses",
+                    method: "GET",
+                    params,
+                };
+            },
+            transformResponse: (response: TReduxResponse<TOfferedCourse[]>) => {
+                return {
+                    data: response.data,
+                    meta: response.meta,
+                };
+            },
+        }),
         createOfferCourse: builder.mutation({
             query: (data) => ({
                 url: "/offered-courses/create-offered-course",
@@ -135,6 +154,7 @@ export const {
     useRegisterSemesterMutation,
     useAssignFacultyMutation,
     useGetCourseFacultyQuery,
-    useChangeSemesterStatusMutation
+    useChangeSemesterStatusMutation,
+    useGetMyOfferedCourseQuery
     
 } = courseManagementApi;

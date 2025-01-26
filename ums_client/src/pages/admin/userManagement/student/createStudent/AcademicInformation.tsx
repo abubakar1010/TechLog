@@ -5,7 +5,7 @@ import {
 } from "../../../../../redux/features/admin/academicManagementApi";
 import { FormSelect } from "../../../../../components/ui/FormSelect";
 
-export const AcademicInformation = () => {
+export const AcademicInformation = ({semester = false}: {semester?: boolean}) => {
 	const { data: semesterData } = useGetAllAcademicSemesterQuery(undefined);
 	const { data: departmentData } = useGetAllAcademicDepartmentQuery(undefined);
 
@@ -22,11 +22,11 @@ export const AcademicInformation = () => {
 	return (
 		<>
 			<Divider>Academic Information </Divider>
-			<FormSelect
+			{semester? "" : <FormSelect
 				placeholder="Enter Semester Name"
 				identifier="admissionSemester"
 				options={semesterOptions || []}
-			/>
+			/>}
 			<FormSelect
 				placeholder="Enter Academic Department"
 				identifier="academicDepartment"
