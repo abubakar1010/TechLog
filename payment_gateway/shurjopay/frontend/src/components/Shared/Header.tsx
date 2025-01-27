@@ -40,7 +40,7 @@ const CartSheet = () => {
   const handlePlaceOrder = async() => {
     console.log(cartData);
     const orderData = {
-      products: cartData.items.map( (item) => ({product: item.product, quantity: item.quantity}))
+      products: cartData.items
     }
     const {data} = await placeNewOrder(orderData)
 

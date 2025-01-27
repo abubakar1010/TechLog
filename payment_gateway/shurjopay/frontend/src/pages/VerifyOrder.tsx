@@ -8,6 +8,9 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, AlertCircle } from "lucide-react";
+import { useSearchParams } from "react-router";
+import { useVerifyOrderQuery } from "@/redux/services/cart/order";
+import Skeleton from "@/components/Skeleton/Skeleton";
 
 interface OrderData {
 	id: number;
@@ -78,111 +81,128 @@ const orderData: OrderData = {
 };
 
 export default function VerifyOrder() {
+	const [searchParams] = useSearchParams();
+
+	const { data, isLoading } = useVerifyOrderQuery(searchParams.get("order_id"));
+
+    console.log(data?.data)
+
 	const handleVerify = () => {
 		// Implement verification logic here
 		console.log("Order verified");
 	};
 
 	return (
-		<div className="container mx-auto p-4">
-			<h1 className="text-3xl font-bold mb-6">Order Verification</h1>
-			<div className="grid gap-6 md:grid-cols-2">
-				<Card>
-					<CardHeader>
-						<CardTitle>Order Details</CardTitle>
-					</CardHeader>
-					<CardContent>
-						<dl className="grid grid-cols-2 gap-2">
-							<dt className="font-semibold">Order ID:</dt>
-							<dd>{orderData.order_id}</dd>
-							<dt className="font-semibold">Amount:</dt>
-							<dd>
-								{orderData.currency} {orderData.amount.toFixed(2)}
-							</dd>
-							<dt className="font-semibold">Status:</dt>
-							<dd>
-								<Badge
-									variant={
-										orderData.bank_status === "Success"
-											? "success"
-											: "destructive"
-									}
+		<>
+			{isLoading ? (
+				<Skeleton />
+			) : (
+				<div className="container mx-auto p-4">
+					<h1 className="text-3xl font-bold mb-6">Order Verification</h1>
+					<div className="grid gap-6 md:grid-cols-2">
+						<Card>
+							<CardHeader>
+								<CardTitle>Order Details</CardTitle>
+							</CardHeader>
+							<CardContent>
+								<dl className="grid grid-cols-2 gap-2">
+									<dt className="font-semibold">Order ID:</dt>
+									<dd>{orderData.order_id}</dd>
+									<dt className="font-semibold">Amount:</dt>
+									<dd>
+										{orderData.currency} {orderData.amount.toFixed(2)}
+									</dd>
+									<dt className="font-semibold">Status:</dt>
+									<dd>
+										<Badge
+											variant={
+												orderData.bank_status === "Success"
+													? "default"
+													: "destructive"
+											}
+										>
+											{orderData.bank_status}
+										</Badge>
+									</dd>
+									<dt className="font-semibold">Date:</dt>
+									<dd>{new Date(orderData.date_time).toLocaleString()}</dd>
+								</dl>
+							</CardContent>
+						</Card>
+
+						<Card>
+							<CardHeader>
+								<CardTitle>Payment Information</CardTitle>
+							</CardHeader>
+							<CardContent>
+								<dl className="grid grid-cols-2 gap-2">
+									<dt className="font-semibold">Method:</dt>
+									<dd>{orderData.method}</dd>
+									<dt className="font-semibold">Transaction ID:</dt>
+									<dd>{orderData.bank_trx_id}</dd>
+									<dt className="font-semibold">Invoice No:</dt>
+									<dd>{orderData.invoice_no}</dd>
+									<dt className="font-semibold">SP Code:</dt>
+									<dd>{orderData.sp_code}</dd>
+									<dt className="font-semibold">SP Message:</dt>
+									<dd>{orderData.sp_message}</dd>
+								</dl>
+							</CardContent>
+						</Card>
+
+						<Card>
+							<CardHeader>
+								<CardTitle>Customer Information</CardTitle>
+							</CardHeader>
+							<CardContent>
+								<dl className="grid grid-cols-2 gap-2">
+									<dt className="font-semibold">Name:</dt>
+									<dd>{orderData.name}</dd>
+									<dt className="font-semibold">Email:</dt>
+									<dd>{orderData.email}</dd>
+									<dt className="font-semibold">Phone:</dt>
+									<dd>{orderData.phone_no}</dd>
+									<dt className="font-semibold">Address:</dt>
+									<dd>{orderData.address}</dd>
+									<dt className="font-semibold">City:</dt>
+									<dd>{orderData.city}</dd>
+								</dl>
+							</CardContent>
+						</Card>
+
+						<Card>
+							<CardHeader>
+								<CardTitle>Verification Status</CardTitle>
+							</CardHeader>
+							<CardContent>
+								<div className="flex items-center gap-2">
+									{orderData.is_verify === 1 ? (
+										<>
+											<CheckCircle className="text-green-500" />
+											<span>Verified</span>
+										</>
+									) : (
+										<>
+											<AlertCircle className="text-yellow-500" />
+											<span>Not Verified</span>
+										</>
+									)}
+								</div>
+							</CardContent>
+							<CardFooter>
+								<Button
+									onClick={handleVerify}
+									disabled={orderData.is_verify === 1}
 								>
-									{orderData.bank_status}
-								</Badge>
-							</dd>
-							<dt className="font-semibold">Date:</dt>
-							<dd>{new Date(orderData.date_time).toLocaleString()}</dd>
-						</dl>
-					</CardContent>
-				</Card>
-
-				<Card>
-					<CardHeader>
-						<CardTitle>Payment Information</CardTitle>
-					</CardHeader>
-					<CardContent>
-						<dl className="grid grid-cols-2 gap-2">
-							<dt className="font-semibold">Method:</dt>
-							<dd>{orderData.method}</dd>
-							<dt className="font-semibold">Transaction ID:</dt>
-							<dd>{orderData.bank_trx_id}</dd>
-							<dt className="font-semibold">Invoice No:</dt>
-							<dd>{orderData.invoice_no}</dd>
-							<dt className="font-semibold">SP Code:</dt>
-							<dd>{orderData.sp_code}</dd>
-							<dt className="font-semibold">SP Message:</dt>
-							<dd>{orderData.sp_message}</dd>
-						</dl>
-					</CardContent>
-				</Card>
-
-				<Card>
-					<CardHeader>
-						<CardTitle>Customer Information</CardTitle>
-					</CardHeader>
-					<CardContent>
-						<dl className="grid grid-cols-2 gap-2">
-							<dt className="font-semibold">Name:</dt>
-							<dd>{orderData.name}</dd>
-							<dt className="font-semibold">Email:</dt>
-							<dd>{orderData.email}</dd>
-							<dt className="font-semibold">Phone:</dt>
-							<dd>{orderData.phone_no}</dd>
-							<dt className="font-semibold">Address:</dt>
-							<dd>{orderData.address}</dd>
-							<dt className="font-semibold">City:</dt>
-							<dd>{orderData.city}</dd>
-						</dl>
-					</CardContent>
-				</Card>
-
-				<Card>
-					<CardHeader>
-						<CardTitle>Verification Status</CardTitle>
-					</CardHeader>
-					<CardContent>
-						<div className="flex items-center gap-2">
-							{orderData.is_verify === 1 ? (
-								<>
-									<CheckCircle className="text-green-500" />
-									<span>Verified</span>
-								</>
-							) : (
-								<>
-									<AlertCircle className="text-yellow-500" />
-									<span>Not Verified</span>
-								</>
-							)}
-						</div>
-					</CardContent>
-					<CardFooter>
-						<Button onClick={handleVerify} disabled={orderData.is_verify === 1}>
-							{orderData.is_verify === 1 ? "Already Verified" : "Verify Order"}
-						</Button>
-					</CardFooter>
-				</Card>
-			</div>
-		</div>
+									{orderData.is_verify === 1
+										? "Already Verified"
+										: "Verify Order"}
+								</Button>
+							</CardFooter>
+						</Card>
+					</div>
+				</div>
+			)}
+		</>
 	);
 }
