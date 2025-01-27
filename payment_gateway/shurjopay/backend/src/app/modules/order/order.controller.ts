@@ -1,5 +1,7 @@
+import { VerificationResponse } from "shurjopay";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
+import { IOrder } from "./order.interface";
 import { orderService } from "./order.service";
 import httpStatus from "http-status";
 
@@ -19,7 +21,7 @@ const verifyPayment = catchAsync(async (req, res) => {
     req.query.order_id as string
   );
 
-  sendResponse(res, {
+  sendResponse<VerificationResponse[] | IOrder>(res, {
     statusCode: httpStatus.CREATED,
     message: "Order verified successfully",
     data: order,
@@ -27,5 +29,12 @@ const verifyPayment = catchAsync(async (req, res) => {
 });
 
 
-
+const getOrders = catchAsync(async(req, res) => {
+  const orders = await orderService.getOrders()
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    message: "Order retrieved successfully",
+    data: orders,
+  });
+})
 export const orderController = { createOrder, verifyPayment, getOrders };

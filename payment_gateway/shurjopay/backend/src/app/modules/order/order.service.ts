@@ -67,6 +67,8 @@ const createOrder = async (
 	return { order, paymentInfo: result };
 };
 
+const getOrders = async () => await Order.find({});
+
 const verifyPayment = async (order_id: string) => {
 	let result;
 	result = await order_utils.verifyPayment(order_id);

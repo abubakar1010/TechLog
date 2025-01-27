@@ -8,6 +8,9 @@ const orderRouter = Router();
 orderRouter
   .route("/")
   .post(auth(UserRole.user), orderController.createOrder)
-  .get(auth(UserRole.user), orderController.verifyPayment);
+  .get(auth(UserRole.user), orderController.getOrders);
+ 
+
+  orderRouter.route("/verify").get(auth(UserRole.user), orderController.verifyPayment);
 
 export default orderRouter;
