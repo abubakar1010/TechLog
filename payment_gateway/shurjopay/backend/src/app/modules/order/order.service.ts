@@ -67,9 +67,34 @@ const createOrder = async (
 	return { order, paymentInfo: result };
 };
 
-const getOrders = async () => {};
+const verifyPayment = async (order_id: string) => {
+	let result;
+	result = await order_utils.verifyPayment(order_id);
 
+	console.log("prev", result)
 
+	if (result.length) {
+		console.log("first", result[0]);
+		result = await Order.findByIdAndUpdate(
+			result[0].customer_order_id,
+			{transactions: {
+				bank_status: result[0].bank_status,
+				sp_code: result[0].sp_code,
+				sp_message: result[0].sp_message,
+				transaction_status: result[0].transaction_status,
+				method: result[0].method,
+				date_time: result[0].date_time,
+			},
+		status:result[0].bank_status === "Success"? "Paid" : result[0].bank_status === "Cancel"? "Canceled" : result[0].bank_status === "Failed"? "Pending" : ""
+	},
+			{ new: true }
+		);
+	}
+	
+	console.log(result)
+
+	return result;
+};
 
 export const orderService = {
 	createOrder,
