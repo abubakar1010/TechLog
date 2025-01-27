@@ -3,7 +3,7 @@ import Order from "./order.model";
 import Product from "../product/product.model";
 import httpStatus from "http-status";
 import AppError from "../../errors/AppError";
-import createPayment from "./order.utils";
+import { order_utils } from "./order.utils";
 
 const createOrder = async (
 	user: IUser,
@@ -45,16 +45,31 @@ const createOrder = async (
 		client_ip,
 	};
 
-	const result = await createPayment(shurjopayPayload);
+	let result;
 
-	console.log(result)
+	result = await order_utils.createPayment(shurjopayPayload);
+
+	console.log(result);
+
+	if (result?.transactionStatus) {
+		await Order.findByIdAndUpdate(
+			result.customer_order_id,
+			{
+				transactions: {
+					id: result.sp_order_id,
+					transactionStatus: result.transactionStatus,
+				},
+			},
+			{ new: true }
+		);
+	}
 
 	return { order, paymentInfo: result };
 };
 
 const getOrders = async () => {};
 
-const verifyPayment = async (sp_trxn_id: string) => {};
+
 
 export const orderService = {
 	createOrder,

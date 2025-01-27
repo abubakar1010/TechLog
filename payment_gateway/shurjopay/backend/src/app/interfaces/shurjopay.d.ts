@@ -21,11 +21,11 @@ declare module "shurjopay" {
 	}
 
 	interface PaymentRequest {
-		prefix: string; // Provided by the shurjoPay team (Mandatory)
-		token: string; // Alphanumeric token for communication with shurjoPay (Mandatory)
-		return_url: string; // URL to redirect customer after payment processing (Mandatory)
-		cancel_url: string; // URL to redirect customer after payment cancellation (Mandatory)
-		store_id: string; // Store ID provided by generate token API response (Mandatory)
+		// prefix: string; // Provided by the shurjoPay team (Mandatory)
+		// token: string; // Alphanumeric token for communication with shurjoPay (Mandatory)
+		// return_url: string; // URL to redirect customer after payment processing (Mandatory)
+		// cancel_url: string; // URL to redirect customer after payment cancellation (Mandatory)
+		// store_id: string; // Store ID provided by generate token API response (Mandatory)
 		amount: number; // Amount the customer is paying (Mandatory)
 		order_id: string; // Dynamically generated order ID (Mandatory)
 		currency: string; // Currency in which payment is being made (Mandatory)
@@ -96,6 +96,7 @@ declare module "shurjopay" {
 		value2?: string; // Additional information
 		value3?: string; // Additional information
 		value4?: string; // Additional information
+		customer_order_id: string,
 	}
 
 	type Callback<T> = (response: T) => void;

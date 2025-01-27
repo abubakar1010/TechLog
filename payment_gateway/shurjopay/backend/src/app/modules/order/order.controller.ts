@@ -16,7 +16,7 @@ const createOrder = catchAsync(async (req, res) => {
 
 const verifyPayment = catchAsync(async (req, res) => {
   const order = await orderService.verifyPayment(
-    req.query.sp_trxn_id as string
+    req.query.order_id as string
   );
 
   sendResponse(res, {
