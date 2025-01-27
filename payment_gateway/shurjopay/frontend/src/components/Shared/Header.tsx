@@ -28,14 +28,29 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { useCreateOrderMutation } from "@/redux/services/cart/order";
 
 const CartSheet = () => {
   const dispatch = useAppDispatch();
 
   const cartData = useAppSelector((state) => state.cart);
 
-  const handlePlaceOrder = () => {
+  const [placeNewOrder] = useCreateOrderMutation()
+
+  const handlePlaceOrder = async() => {
     console.log(cartData);
+    const orderData = {
+      products: cartData.items.map( (item) => ({product: item.product, quantity: item.quantity}))
+    }
+    const {data} = await placeNewOrder(orderData)
+
+    const checkoutURL = data?.data?.paymentInfo?.checkout_url
+
+    if(checkoutURL){
+      window.location.href = checkoutURL
+    }
+
+    console.log(data)
   };
 
   return (

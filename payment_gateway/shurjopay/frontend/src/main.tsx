@@ -26,6 +26,7 @@ createRoot(document.getElementById("root")!).render(
             </Route>
             <Route element={<AuthLayout />}>
               <Route path="order" element={<Order />} />
+              <Route path="order/verify" element={<Order />} />
             </Route>
 
             {/* <Route path="concerts">
