@@ -64,6 +64,16 @@
 		<script src="/socket.io/socket.io.js"></script>
 		<script>
 			const socket = io();
+			const input = document.getElementById("input")
+			const form = document.getElementById("form")
+			form.addEventListener("submit", (e) => {
+				e.preventDefault();
+				const message = input.value;
+				if(message){
+					socket.emit("chat message", message)
+					input.value = ""
+				}
+			})
 		</script>
 	</body>
 </html>
