@@ -1,12 +1,18 @@
 import express from 'express'
 import {createServer} from 'http'
+import { nanoid } from 'nanoid';
 import {Server} from 'socket.io'
 
 const app = express();
 
 const httpServer = createServer(app)
 
-const io = new Server({httpServer})
+const io = new Server(httpServer, {cors:{
+    origin: "*"
+}})
+
+const user = [
+    "Rayhan", "Abdullah", "Emon", "Rohan", "Mehadi", "Abu Bakar", "Ritu", "Sumaya", "Sharna"]
 
 io.on("connection", (socket) => {
     console.log("socket io is connected")
@@ -14,7 +20,7 @@ io.on("connection", (socket) => {
 
     socket.on("chat", (payload) => {
         console.log("hidden think of payload", payload)
-        io.emit("chat", payload)
+        io.emit("chat", [{...payload.newMessage}])
     })
 })
 
