@@ -74,6 +74,13 @@
 					input.value = ""
 				}
 			})
+
+			socket.on("chat message", (msg) => {
+				console.log(msg)
+				const message = document.createElement("li")
+				message.innerText = msg;
+				document.getElementById("messages").appendChild(message)
+			})
 		</script>
 	</body>
 </html>
