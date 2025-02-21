@@ -44,23 +44,29 @@ export const OfferCourse = () => {
 		value: item._id,
 	}));
 
-	const { data: academicDepartmentData } =
-		useGetAllAcademicDepartmentQuery(undefined, {skip: !facultyId});
+	const { data: academicDepartmentData } = useGetAllAcademicDepartmentQuery(
+		undefined,
+		{ skip: !facultyId }
+	);
 
 	const academicDepartmentOption = academicDepartmentData?.data?.map(
 		(item) => ({ label: item.name, value: item._id })
 	);
 
-	const { data: courseData } = useGetAllCourseQuery(undefined, {skip: !departmentId});
+	const { data: courseData } = useGetAllCourseQuery(undefined, {
+		skip: !departmentId,
+	});
 
 	const courseOption = courseData?.data?.map((item) => ({
 		label: item.title,
 		value: item._id,
 	}));
 
-	const { data: facultyData } = useGetCourseFacultyQuery(courseId, {skip: !courseId});
+	const { data: facultyData } = useGetCourseFacultyQuery(courseId, {
+		skip: !courseId,
+	});
 
-	console.log(facultyData)
+	console.log(facultyData);
 
 	const facultyOption = facultyData?.data?.faculties?.map((item) => ({
 		label: item.fullName,

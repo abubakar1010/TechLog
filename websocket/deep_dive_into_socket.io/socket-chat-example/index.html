@@ -59,13 +59,18 @@
 	<body>
 		<ul id="messages"></ul>
 		<form id="form" action="">
-			<input id="input" autocomplete="off" /><button>Send</button>
+			<input id="input" autocomplete="off" /><button>Send</button><button id="toggle-button">Disconnect</button>
 		</form>
 		<script src="/socket.io/socket.io.js"></script>
 		<script>
-			const socket = io();
+			const socket = io({
+				auth:{
+					serverOffset: 0
+				}
+			});
 			const input = document.getElementById("input")
 			const form = document.getElementById("form")
+			const toggleButton = document.getElementById("toggle-button")
 			form.addEventListener("submit", (e) => {
 				e.preventDefault();
 				const message = input.value;
@@ -75,11 +80,24 @@
 				}
 			})
 
-			socket.on("chat message", (msg) => {
+			socket.on("chat message", (msg, serverOffset) => {
 				console.log(msg)
 				const message = document.createElement("li")
 				message.innerText = msg;
 				document.getElementById("messages").appendChild(message)
+				window.scrollTo(0, document.body.scrollHeight);
+				socket.auth.serverOffset = serverOffset
+			})
+		
+			toggleButton.addEventListener("click", (e) => {
+				e.preventDefault();
+				if(socket.connected){
+					toggleButton.innerText = "Connect"
+					socket.disconnect()
+				}else{
+					toggleButton.innerText = "disconnect"
+					socket.connect()
+				}
 			})
 		</script>
 	</body>

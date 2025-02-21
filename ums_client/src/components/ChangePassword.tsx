@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 export const ChangePassword = () => {
 	const [changePassword] = useChangePasswordMutation();
 	const dispatch = useAppDispatch();
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 
 	const onSubmit = async (data: FieldValues) => {
 		const res = await changePassword(data);
@@ -19,7 +19,7 @@ export const ChangePassword = () => {
 		if (res?.data?.success) {
 			toast.success(res?.data?.message);
 			dispatch(logout());
-			navigate("/login")
+			navigate("/login");
 		}
 
 		if (res.error) {

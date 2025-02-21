@@ -11,26 +11,30 @@ import { TError, TResponse } from "../../../types";
 import { TAcademicFaculty } from "../../../types/academicFaculty.type";
 
 export const CreateAcademicFaculty = () => {
+	const [createNewAcademicFaculty] = useCreateAcademicFacultyMutation();
 
-	const [createNewAcademicFaculty] = useCreateAcademicFacultyMutation()
-
-	const onSubmit = async(data: FieldValues) => {
+	const onSubmit = async (data: FieldValues) => {
 		const academicFacultyData = {
-			name: data.name
-		}
+			name: data.name,
+		};
 
 		try {
-			const res = await createNewAcademicFaculty(academicFacultyData) as {data:TResponse<TAcademicFaculty>;error?:TError}
-			if(res?.data) toast.success(res?.data.message)
-			if(res?.error) toast.success(res?.error?.data?.message)
+			const res = (await createNewAcademicFaculty(academicFacultyData)) as {
+				data: TResponse<TAcademicFaculty>;
+				error?: TError;
+			};
+			if (res?.data) toast.success(res?.data.message);
+			if (res?.error) toast.success(res?.error?.data?.message);
 		} catch (error: any) {
-			toast.error(error.message)
+			toast.error(error.message);
 		}
 	};
 
 	return (
 		<div>
-			<h1 style={{textAlign: "center", margin: "10px 0"}}>This is the CreateAcademicFaculty page</h1>
+			<h1 style={{ textAlign: "center", margin: "10px 0" }}>
+				This is the CreateAcademicFaculty page
+			</h1>
 			<Flex justify="center">
 				<Col span={8}>
 					<FormContainer
