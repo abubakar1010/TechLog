@@ -1,0 +1,109 @@
+{
+	"users": [
+		{
+			"id": 1,
+			"name": "Abu Bakar",
+			"email": "abu@example.com",
+			"username": "abu_bakar",
+			"password": "hashedpassword",
+			"img": "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+			"balance": "$400",
+			"createdAt": "2025-02-27T10:00:00Z"
+		},
+		{
+			"id": 2,
+			"name": "Arman Ali",
+			"email": "arman@example.com",
+			"username": "arman_ali",
+			"img": "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+			"password": "hashedpassword",
+			"balance": "$320",
+			"createdAt": "2025-02-27T11:00:00Z"
+		},
+		{
+			"id": 3,
+			"name": "Abu Bakar",
+			"email": "abu@example.com",
+			"username": "abu_bakar",
+			"password": "hashedpassword",
+			"img": "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+			"balance": "$400",
+			"createdAt": "2025-02-27T10:00:00Z"
+		},
+		{
+			"id": 4,
+			"name": "Arman Ali",
+			"email": "arman@example.com",
+			"username": "arman_ali",
+			"img": "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+			"password": "hashedpassword",
+			"balance": "$320",
+			"createdAt": "2025-02-27T11:00:00Z"
+		}
+	],
+	"posts": [
+		{
+			"id": 1,
+			"userId": 1,
+			"title": "My First Post",
+			"content": "This is my first post on this platform!",
+			"createdAt": "2025-02-27T12:00:00Z"
+		},
+		{
+			"id": 2,
+			"userId": 2,
+			"title": "Excited to Join",
+			"content": "Looking forward to great discussions here.",
+			"createdAt": "2025-02-27T13:00:00Z"
+		}
+	],
+	"comments": [
+		{
+			"id": 1,
+			"postId": 1,
+			"userId": 2,
+			"content": "Great start! Looking forward to more posts.",
+			"createdAt": "2025-02-27T14:00:00Z"
+		},
+		{
+			"id": 2,
+			"postId": 2,
+			"userId": 1,
+			"content": "Welcome to the platform!",
+			"createdAt": "2025-02-27T14:30:00Z"
+		}
+	],
+	"replies": [
+		{
+			"id": 1,
+			"commentId": 1,
+			"userId": 1,
+			"content": "Thank you! I appreciate your support.",
+			"createdAt": "2025-02-27T15:00:00Z"
+		},
+		{
+			"id": 2,
+			"commentId": 2,
+			"userId": 2,
+			"content": "Thanks! Happy to be here.",
+			"createdAt": "2025-02-27T15:30:00Z"
+		}
+	],
+	"likes": [
+		{
+			"id": 1,
+			"userId": 2,
+			"postId": 1
+		},
+		{
+			"id": 2,
+			"userId": 1,
+			"postId": 2
+		},
+		{
+			"id": 3,
+			"userId": 1,
+			"commentId": 1
+		}
+	]
+}
