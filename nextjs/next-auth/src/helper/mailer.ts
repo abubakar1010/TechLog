@@ -1,39 +1,45 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import User from "@/models/user-model";
 import nodemailer from "nodemailer";
+import bcrypt from "bcrypt";
+
 const sendMail = async ({
 	email,
 	emailType,
+	userId,
 }: {
 	email: string;
 	emailType: string;
 	userId: string;
 }) => {
 	try {
-		//TODO: Configure mailer for usages
 
 		let subject: string;
+		let verifyToken: string;
 
-		switch (emailType) {
-			case "VERIFY":
-				subject = "Verify Your email";
-				break;
+		if (emailType === "VERIFY") {
+			verifyToken = await bcrypt.hash(userId.toString(), 10);
+			await User.findByIdAndUpdate(userId, {
+				verifyToken,
+				verifyTokenExpiration: Date.now() + 3600 * 1000,
+			});
 
-			case "RESET":
-				subject = "RESET Your email";
-				break;
-
-			default:
-				subject = "Please Make Sure You Read This Email";
-				break;
+			subject = "Verify Your email";
+		} else {
+			verifyToken = await bcrypt.hash(userId.toString(), 10);
+			await User.findByIdAndUpdate(userId, {
+				verifyToken,
+				verifyTokenExpiration: Date.now() + 3600 * 1000,
+			});
+			subject = "RESET Your email";
 		}
 
 		const transporter = nodemailer.createTransport({
-			host: "smtp.ethereal.email",
-			port: 587,
-			secure: false, // true for port 465, false for other ports
+			host: "sandbox.smtp.mailtrap.io",
+			port: 2525,
 			auth: {
-				user: "maddison53@ethereal.email",
-				pass: "jn7jnAPss4f63QBp6D",
+				user: "77d6d94fb04d65",
+				pass: "52123e8b7a89d2",
 			},
 		});
 
@@ -41,7 +47,14 @@ const sendMail = async ({
 			from: '"Your Learning Buddy 👻" <abubakar.ai>',
 			to: email,
 			subject: subject,
-			html: "<b>Dude We are Here</b>",
+			html: `<p>
+            Please Click 
+            <a href="${process.env.DOMAIN}/${emailType.toLocaleLowerCase()}?token=${verifyToken}">Here</a> to ${subject} <br />
+            or copy past the link below in your browser.
+            ${verifyToken}
+            </p>
+
+            `,
 		};
 		const mailResponse = await transporter.sendMail(mailOption);
 

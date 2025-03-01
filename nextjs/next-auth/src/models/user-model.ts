@@ -1,8 +1,21 @@
 import { model, models, Schema } from "mongoose";
 
-const userSchema = new Schema(
+
+export type TUser = {
+	username: string;
+	email: string;
+	password: string;
+	role?: "USER" | "ADMIN",
+	verified: boolean;
+	forgotPasswordToken: string;
+	forgotPasswordTokenExpiration: string;
+	verifyToken: string;
+	verifyTokenExpiration: string;
+}
+
+const userSchema = new Schema<TUser>(
 	{
-		name: {
+		username: {
 			type: String,
 			required: true,
 		},
@@ -24,8 +37,6 @@ const userSchema = new Schema(
 			type: Boolean,
 			default: false,
 		},
-		resetToken: String,
-		resetTokenExpiration: Date,
 		forgotPasswordToken: String,
 		forgotPasswordTokenExpiration: Date,
 		verifyToken: String,
@@ -36,6 +47,6 @@ const userSchema = new Schema(
 	}
 );
 
-const User = models.users || model("users", userSchema);
+const User = models.users || model<TUser>("users", userSchema);
 
 export default User;
