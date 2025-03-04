@@ -11,6 +11,6 @@ export const FormContainer = styled.section`
     padding: 1.4rem 3rem;
     border-radius: 0.3rem;
     & > *:not(:last-child) {
-    margin-bottom: 1rem; /* Equivalent to space-x-4 */
+    margin-bottom: 1rem; 
   }
 `

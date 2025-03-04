@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 connectToDB();
 
-export const POST = async (request: NextRequest) => {
+export const GET = async (request: NextRequest) => {
 	try {
 		const id = await getDataFromJWT(request);
 

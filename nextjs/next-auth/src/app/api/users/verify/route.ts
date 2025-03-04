@@ -12,6 +12,8 @@ export const POST = async (request: NextRequest) => {
 
 		const { token } = reqBody;
 
+		console.log("token", token)
+
 		if (!token) {
 			return NextResponse.json(
 				{
@@ -30,8 +32,10 @@ export const POST = async (request: NextRequest) => {
 			},
 		});
 
+		console.log("user before modify", user, token)
+
 		if (!user) {
-			NextResponse.json(
+			return NextResponse.json(
 				{
 					message: "Your session expired",
 				},
@@ -40,6 +44,7 @@ export const POST = async (request: NextRequest) => {
 				}
 			);
 		}
+		console.log("user", user)
 
 		user.verified = true;
 
@@ -47,8 +52,10 @@ export const POST = async (request: NextRequest) => {
 
 		await user.save();
 
+
 		return NextResponse.json(
 			{
+				success: true,
 				message: "You are successfully verified",
 			},
 			{
