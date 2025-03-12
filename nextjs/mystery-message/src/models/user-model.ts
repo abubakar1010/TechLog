@@ -1,20 +1,21 @@
 import { model, Model, models, Schema } from "mongoose";
 
 export interface IMessage extends Document {
-	message: string;
-	user: Schema.Types.ObjectId;
+	messages: string;
 }
 
-const MessageSchema: Schema<IMessage> = new Schema({
-	message: {
-		type: String,
-		required: true,
+const MessageSchema: Schema<IMessage> = new Schema(
+	{
+		messages: {
+			type: String,
+			required: true,
+		},
 	},
-	user: {
-		type: Schema.Types.ObjectId,
-		required: true,
-	},
-});
+	{
+		timestamps: true,
+		_id: false,
+	}
+);
 
 export interface IUser extends Document {
 	username: string;
@@ -24,7 +25,7 @@ export interface IUser extends Document {
 	isAcceptingMessage: boolean;
 	verificationCode: string;
 	verificationCodeExpiry: Date;
-	message: IMessage;
+	messages: IMessage[];
 }
 
 const UserSchema: Schema<IUser> = new Schema(
@@ -64,7 +65,7 @@ const UserSchema: Schema<IUser> = new Schema(
 			type: Boolean,
 			required: true,
 		},
-		message: [MessageSchema],
+		messages: [MessageSchema],
 	},
 	{
 		timestamps: true,
