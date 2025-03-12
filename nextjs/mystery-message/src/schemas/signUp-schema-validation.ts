@@ -6,6 +6,14 @@ export const EmailValidationSchema = z
 		/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
 		"Please enter a valid email address in the format: example@domain.com"
 	);
+export const UsernameValidationSchema = z
+	.string()
+	.min(3, "Username must be at least 3 character")
+	.max(10, "Username must be no more than 10 character")
+	.regex(
+		/[a-zA-Z][a-zA-Z0-9-_]{3,32}/gi,
+		"Must start with an alphabetic character. Can contain the following characters: a-z A-Z 0-9 - and _ "
+	);
 export const PasswordValidationSchema = z
 	.string()
 	.regex(

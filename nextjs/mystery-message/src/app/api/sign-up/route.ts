@@ -82,7 +82,7 @@ export const POST = async (request: NextRequest) => {
 				}
 			);
 		}
-		Response.json(
+		return Response.json(
 			{
 				success: true,
 				message: "User successfully Registered",

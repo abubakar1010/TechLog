@@ -15,9 +15,9 @@ const initialValue = {
 function App() {
 	const [value, setValue] = useState({ ...initialValue });
 	const [errors, setErrors] = useState({ ...initialValue });
-	const [focuses, setFocuses] = useState( {
+	const [focuses, setFocuses] = useState({
 		name: false,
-		email: false
+		email: false,
 	});
 
 	const handleChange = (e) => {
@@ -25,6 +25,8 @@ function App() {
 			...prev,
 			[e.target.name]: e.target.value,
 		}));
+
+		const {error} = checkValidation({})
 	};
 
 	const checkValidation = (values) => {
@@ -61,27 +63,27 @@ function App() {
 	const handleFocus = (e) => {
 		setFocuses((prev) => ({
 			...prev,
-			[e.target.name]: true
-		}))
-	}
+			[e.target.name]: true,
+		}));
+	};
 
 	const handleBlur = (e) => {
-		const name = e.target.name
-		console.log(name)
-		const {newError} = checkValidation(value)
+		const name = e.target.name;
+		console.log(name);
+		const { newError } = checkValidation(value);
 
-		console.log(newError)
+		console.log(newError);
 
-		if(newError[name] && focuses[name]){
-			console.log(errors === newError)
+		if (newError[name] && focuses[name]) {
+			console.log(errors === newError);
 			setErrors((prev) => ({
 				...prev,
-				[name]: newError[name]
-			}))
-		}else{
-			setErrors(newError)
+				[name]: newError[name],
+			}));
+		} else {
+			setErrors(newError);
 		}
-	}
+	};
 
 	return (
 		<>
