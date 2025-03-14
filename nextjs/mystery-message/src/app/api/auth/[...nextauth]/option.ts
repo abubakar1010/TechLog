@@ -17,14 +17,14 @@ export const authOption: NextAuthOptions = {
 			async authorize(credentials: any): Promise<any> {
 				await connectToDB();
 				try {
+					console.log(credentials.identifier);
 					const user = await User.findOne({
 						$or: [
-							{
-								email: credentials.identifier,
-								username: credentials.identifier,
-							},
+							{ email: credentials.identifier },
+							{ username: credentials.identifier },
 						],
 					});
+					console.log(user);
 					if (!user) {
 						throw new Error("User not exist with this credential");
 					}
@@ -54,7 +54,6 @@ export const authOption: NextAuthOptions = {
 				session.user.verified = token.verified;
 			}
 			return session;
-            
 		},
 		async jwt({ token, user }) {
 			if (user) {
@@ -67,10 +66,10 @@ export const authOption: NextAuthOptions = {
 		},
 	},
 	pages: {
-		signIn: "/auth/signin",
+		signIn: "/sign-in",
 	},
 	session: {
 		strategy: "jwt",
 	},
-	secret: process.env.NEXT_AUTH_SECRET,
+	secret: process.env.NEXTAUTH_SECRET,
 };
