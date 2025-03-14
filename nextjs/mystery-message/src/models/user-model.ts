@@ -2,6 +2,7 @@ import { model, Model, models, Schema } from "mongoose";
 
 export interface IMessage extends Document {
 	messages: string;
+	_id: string
 }
 
 const MessageSchema: Schema<IMessage> = new Schema(
@@ -13,7 +14,7 @@ const MessageSchema: Schema<IMessage> = new Schema(
 	},
 	{
 		timestamps: true,
-		_id: false,
+		// _id: false,
 	}
 );
 
