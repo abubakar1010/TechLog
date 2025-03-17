@@ -1,7 +1,9 @@
 // import { ReusableForm } from "./components/ReusableForm";
 // import { SimpleForm } from "./components/SimpleForm";
 
-import { ShadcnForm } from "./components/ShadcnForm";
+import { Playground } from "./components/Playground";
+// import { SemiComplexForm } from "./components/SemiComplexForm";
+// import { ShadcnForm } from "./components/ShadcnForm";
 
 export const App = () => {
 	return (
@@ -12,7 +14,9 @@ export const App = () => {
 			<div className="max-w-4xl mx-auto my-24">
 				{/* <SimpleForm /> */}
                 {/* <ReusableForm /> */}
-				<ShadcnForm />
+				{/* <ShadcnForm /> */}
+				{/* <SemiComplexForm /> */}
+				<Playground />
 			</div>
 		</div>
 	);
