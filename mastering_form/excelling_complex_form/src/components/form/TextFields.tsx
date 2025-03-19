@@ -25,12 +25,13 @@ export const TextFields = <TFieldValue extends FieldValues>(
 	return (
 		<FormField
 			control={control}
+			
 			name={name}
 			render={({field}) => (
-				<FormItem>
+				<FormItem className=" w-full">
 					{label && <FormLabel>{label}</FormLabel>}
 					<FormControl>
-						<Input type={type} placeholder={placeholder} {...field} />
+						<Input className="my-2" type={type} placeholder={placeholder} {...field} />
 					</FormControl>
 					<FormMessage />
 				</FormItem>

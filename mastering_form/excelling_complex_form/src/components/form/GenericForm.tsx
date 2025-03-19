@@ -31,7 +31,6 @@ type TGenericFormProps<TSchema extends ZodType> = {
 	schema: TSchema;
 	initialValues: Partial<z.infer<TSchema>>;
 	onSubmit: SubmitHandler<z.infer<TSchema>>;
-	mode?: "onChange" | "onSubmit" | "onBlur";
 	ref?: Ref<TGenericFormRef<z.infer<TSchema>>>;
 };
 
@@ -43,14 +42,12 @@ export const GenericForm = <TSchema extends ZodType>(
 		schema,
 		initialValues,
 		onSubmit,
-		mode = "onChange",
 		ref,
 	} = props;
 
 	type TFormValues = z.infer<TSchema>;
 
 	const form = useForm<TFormValues>({
-		mode,
 		resolver: zodResolver(schema),
 		defaultValues: initialValues as DefaultValues<TFormValues>,
 	});
@@ -74,7 +71,7 @@ export const GenericForm = <TSchema extends ZodType>(
 	return (
 		<GenericFormContext value={{ control: form.control }}>
 			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)}>{children}</form>
+				<form onSubmit={ form.handleSubmit(onSubmit)}>{children}</form>
 			</Form>
 		</GenericFormContext>
 	);
