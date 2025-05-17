@@ -1,0 +1,1 @@
+export {GenericForm, type TGenericFormRef } from "./GenericForm.tsx"

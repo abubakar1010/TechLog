@@ -13,6 +13,10 @@ import { Form } from "../ui/form";
 import { GenericFormContext } from "./CustomContext";
 import { z, ZodType } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { TextFields } from "./fields/TextFields";
+import { SelectFields } from "./fields/SelectField";
+import { ArrayFiled } from "./ArrayField";
+import { ResetButton } from "./ResetButton";
 
 export type TGenericFormRef<TFormFieldValues extends FieldValues> = {
 	control: Control<TFormFieldValues>;
@@ -78,3 +82,7 @@ export const GenericForm = <TSchema extends ZodType>(
 };
 
 GenericForm.displayName = "GenericForm";
+GenericForm.Input = TextFields;
+GenericForm.Select = SelectFields;
+GenericForm.ArrayInput = ArrayFiled;
+GenericForm.Reset = ResetButton;

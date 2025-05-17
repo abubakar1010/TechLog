@@ -5,9 +5,9 @@ import {
 	FormItem,
 	FormLabel,
 	FormMessage,
-} from "../ui/form";
-import { useGenericFormContext } from "./CustomContext";
-import { Input } from "../ui/input";
+} from "../../ui/form";
+import { useGenericFormContext } from "../CustomContext";
+import { Input } from "../../ui/input";
 
 type TTextFieldsProps<TFieldValue extends FieldValues> = {
 	name: Path<TFieldValue>;
@@ -25,13 +25,17 @@ export const TextFields = <TFieldValue extends FieldValues>(
 	return (
 		<FormField
 			control={control}
-			
 			name={name}
-			render={({field}) => (
+			render={({ field }) => (
 				<FormItem className=" w-full">
 					{label && <FormLabel>{label}</FormLabel>}
 					<FormControl>
-						<Input className="my-2" type={type} placeholder={placeholder} {...field} />
+						<Input
+							className="my-2"
+							type={type}
+							placeholder={placeholder}
+							{...field}
+						/>
 					</FormControl>
 					<FormMessage />
 				</FormItem>

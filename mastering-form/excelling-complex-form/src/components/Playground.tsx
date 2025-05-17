@@ -1,11 +1,9 @@
 import { z } from "zod";
-import { GenericForm, TGenericFormRef } from "./form/GenericForm";
 import { Button } from "./ui/button";
-import { TextFields } from "./form/TextFields";
 import { useRef, useState } from "react";
 import { FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
+import { GenericForm, TGenericFormRef } from "./form";
 import { Textarea } from "./ui/textarea";
-import { ArrayFiled } from "./form/ArrayField";
 
 const ZFormSchema = z.object({
 	name: z
@@ -18,7 +16,14 @@ const ZFormSchema = z.object({
 		.string()
 		.min(5, { message: "Content must be at least 5 characters" }),
 	skills: z.array(z.string()),
+	gender: z.enum(["male", "female", "other"]),
 });
+
+const genderOptions = [
+	{ label: "Male", value: "male" },
+	{ label: "Female", value: "female" },
+	{ label: "Other", value: "other" },
+];
 
 type TForm = z.infer<typeof ZFormSchema>;
 
@@ -28,6 +33,7 @@ const initialValues: TForm = {
 	age: 0,
 	content: "",
 	skills: ["REACT", "TYPESCRIPT", "NODEJS", "REACT NATIVE", "REDUX", "GRAPHQL"],
+	gender: "male",
 };
 
 export const Playground = () => {
@@ -45,14 +51,20 @@ export const Playground = () => {
 				initialValues={initialValues}
 				schema={ZFormSchema}
 				onSubmit={(values) => {
+					alert(JSON.stringify(values));
 					console.log(values);
 				}}
 				ref={formRef}
 			>
 				<div className=" space-y-7 my-8">
-					<TextFields<TForm> name="name" label="Name" />
-					<TextFields<TForm> name="email" label="Email" type="email" />
-					<TextFields<TForm> name="age" label="Age" type="number" />
+					<GenericForm.Input<TForm> name="name" label="Name" />
+					<GenericForm.Input<TForm> name="email" label="Email" type="email" />
+					<GenericForm.Input<TForm> name="age" label="Age" type="number" />
+					<GenericForm.Select<TForm>
+						name="gender"
+						options={genderOptions}
+						label="gender"
+					/>
 					<Skill />
 					<div>
 						<FormField
@@ -69,7 +81,7 @@ export const Playground = () => {
 					</div>
 					<div className=" flex justify-end gap-6">
 						<Button
-						type="button"
+							type="button"
 							onClick={() =>
 								handleReset({
 									name: "rayhan",
@@ -82,6 +94,7 @@ export const Playground = () => {
 						>
 							Fill Input field
 						</Button>
+						<GenericForm.Reset label="Reset" />
 						<Button type="submit" className="cursor-pointer">
 							Submit
 						</Button>
@@ -106,9 +119,8 @@ export const Playground = () => {
 const Skill = () => {
 	return (
 		<>
-			<ArrayFiled name="skills">
+			<GenericForm.ArrayInput name="skills">
 				{({ fields, append, remove }) => {
-					console.log(fields);
 					return (
 						<div>
 							{/* {value.fields.map((field) => (
@@ -120,12 +132,12 @@ const Skill = () => {
 										key={field.id}
 										className=" flex gap-2 items-center w-full"
 									>
-										<TextFields<TForm>
+										<GenericForm.Input<TForm>
 											name={`skills.${index}`}
 											label={`Skills - ${index}`}
 										/>
 										<Button
-										type="button"
+											type="button"
 											onClick={() => remove(index)}
 											className="cursor-pointer"
 										>
@@ -135,7 +147,7 @@ const Skill = () => {
 								))}
 							</div>
 							<Button
-							type="button"
+								type="button"
 								onClick={() => append("")}
 								className="cursor-pointer my-2"
 							>
@@ -144,7 +156,7 @@ const Skill = () => {
 						</div>
 					);
 				}}
-			</ArrayFiled>
+			</GenericForm.ArrayInput>
 		</>
 	);
 };

@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { InputField } from "./InputField";
+import { InputField } from "./form/InputField";
 
 export type TFormData = {
 	name: string;
@@ -21,7 +21,7 @@ export const ReusableForm = () => {
 	};
 	const { errors, dirtyFields } = form.formState;
 
-	console.log(errors)
+	console.log(errors);
 
 	//console.log(dirtyFields.name);
 	return (

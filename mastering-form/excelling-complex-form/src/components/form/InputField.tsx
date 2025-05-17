@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { HTMLInputTypeAttribute } from "react";
 import { Path, UseFormRegister } from "react-hook-form";
-import { TFormData } from "./SimpleForm";
-import { cn } from "../lib/utils";
+import { TFormData } from "../SimpleForm";
+import { cn } from "../../lib/utils";
 
 type TProps = {
 	label: string;
