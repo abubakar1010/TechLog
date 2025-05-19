@@ -17,7 +17,7 @@ int main(void)
     for (int i = starting_point; i <= ending_point; i++)
     {
         bool isPrime = true;
-        for (int j = 2; j < i; j++)
+        for (int j = 2; j * j <= i; j++)
         {
             if (i % j == 0)
             {
