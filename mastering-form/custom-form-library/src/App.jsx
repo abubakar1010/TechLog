@@ -14,7 +14,7 @@ const init = {
 };
 
 function App() {
-	const { formState } = useForm({
+	const { formState, handleChange } = useForm({
 		init,
 	});
 
@@ -33,6 +33,7 @@ function App() {
 							name={"username"}
 							id={"username"}
 							placeholder={"Enter Your Username"}
+							onChange={handleChange}
 						/>
 						<InputGroup
 							type={"text"}
@@ -40,6 +41,7 @@ function App() {
 							name={"name"}
 							id={"name"}
 							placeholder={"Enter Your Name"}
+							onChange={handleChange}
 						/>
 						<InputGroup
 							type={"number"}
@@ -47,6 +49,7 @@ function App() {
 							name={"age"}
 							id={"age"}
 							placeholder={"Enter Your Age"}
+							onChange={handleChange}
 						/>
 						<InputGroup
 							type={"number"}
@@ -54,6 +57,7 @@ function App() {
 							name={"age"}
 							id={"age"}
 							placeholder={"Enter Your Age"}
+							onChange={handleChange}
 						/>
 						<InputGroup
 							type={"text"}
@@ -61,6 +65,7 @@ function App() {
 							name={"email"}
 							id={"email"}
 							placeholder={"Enter Your Email"}
+							onChange={handleChange}
 						/>
 						<InputGroup
 							type={"text"}
@@ -68,6 +73,7 @@ function App() {
 							name={"studentId"}
 							id={"studentId"}
 							placeholder={"Enter Your StudentId"}
+							onChange={handleChange}
 						/>
 						<InputGroup
 							type={"text"}
@@ -75,6 +81,7 @@ function App() {
 							name={"phone"}
 							id={"phone"}
 							placeholder={"Enter Your Phone"}
+							onChange={handleChange}
 						/>
 						<InputGroup
 							type={"text"}
@@ -82,6 +89,7 @@ function App() {
 							name={"university"}
 							id={"university"}
 							placeholder={"Enter Your University"}
+							onChange={handleChange}
 						/>
 						<InputGroup
 							type={"text"}
@@ -89,6 +97,7 @@ function App() {
 							name={"department"}
 							id={"department"}
 							placeholder={"Enter Your Department"}
+							onChange={handleChange}
 						/>
 						<InputGroup
 							type={"file"}
@@ -96,6 +105,7 @@ function App() {
 							name={"avatar"}
 							id={"avatar"}
 							placeholder={"Enter Your Avatar"}
+							onChange={handleChange}
 						/>
 					</div>
 				</form>
