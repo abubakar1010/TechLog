@@ -10,15 +10,19 @@ const useForm = ({ init, validator }) => {
 	const [state, setState] = useState(valueToState({ ...init }));
 
 	const handleChange = (e) => {
-		const { name: key, value } = e.target;
+		const { name: key, value, type, checked } = e.target;
 
 		const oldState = deepCopy(state);
 
-		oldState[key].value = value;
+		if (type === "checkbox") {
+			oldState[key].value = checked;
+		} else {
+			oldState[key].value = value;
+		}
 
 		const { errors } = getError(stateToChunk(oldState));
 
-		if (errors[key] ) {
+		if (errors[key]) {
 			oldState[key].error = errors[key];
 		} else {
 			oldState[key].error = "";
@@ -75,15 +79,15 @@ const useForm = ({ init, validator }) => {
 
 	const handleSubmit = (e, cb) => {
 		e.preventDefault();
-		const { hasError, errors} = getError()
+		const { hasError, errors } = getError();
 		cb({
 			values: stateToChunk(state),
 			errors,
-			hasError
-		})
-	}
+			hasError,
+		});
+	};
 
-	const handleClear = () => setState(valueToState(init))
+	const handleClear = () => setState(valueToState(init));
 
 	return {
 		formState: state,
@@ -91,7 +95,7 @@ const useForm = ({ init, validator }) => {
 		handleTouched,
 		handleBlur,
 		handleSubmit,
-		handleClear
+		handleClear,
 	};
 };
 
