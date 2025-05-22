@@ -8,3 +8,5 @@ export const valueToState = (values) =>
 		};
 		return acc;
 	}, {});
+
+export const deepCopy = (target) => JSON.parse(JSON.stringify(target));
