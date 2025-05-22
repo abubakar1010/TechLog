@@ -18,7 +18,7 @@ const useForm = ({ init, validator }) => {
 
 		const { errors } = getError(stateToChunk(oldState));
 
-		if (errors[key] && !oldState[key].isFocused) {
+		if (errors[key] ) {
 			oldState[key].error = errors[key];
 		} else {
 			oldState[key].error = "";
@@ -73,11 +73,25 @@ const useForm = ({ init, validator }) => {
 		};
 	};
 
+	const handleSubmit = (e, cb) => {
+		e.preventDefault();
+		const { hasError, errors} = getError()
+		cb({
+			values: stateToChunk(state),
+			errors,
+			hasError
+		})
+	}
+
+	const handleClear = () => setState(valueToState(init))
+
 	return {
 		formState: state,
 		handleChange,
 		handleTouched,
 		handleBlur,
+		handleSubmit,
+		handleClear
 	};
 };
 
