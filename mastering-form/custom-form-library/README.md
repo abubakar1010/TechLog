@@ -1,12 +1,16 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Custom Form Library
+This is a custom form library that provides a set of functionalities to create and manage forms in a web application. It includes features for validation, error handling, and form submission.
 
-Currently, two official plugins are available:
+## Features
+- Customizable form fields
+- Validation rules
+- Error handling
+- Form submission
+- Support for various input types (text, email, password, etc.)
+- Support for custom validation messages
+- Support for form reset
+- Support for form submission with file upload
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
