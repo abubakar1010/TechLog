@@ -47,16 +47,21 @@ void sort(vector<int> &array)
     {
         if (array[left_ptr] == 1 && array[right_ptr] == 0)
         {
-            array[left_ptr++] = 0;
-            array[right_ptr--] = 1;
-        }
-        if (array[left_ptr] == 0)
-        {
+            array[left_ptr] = 0;
+            array[right_ptr] = 1;
             left_ptr++;
-        }
-        if (array[right_ptr] == 1)
-        {
             right_ptr--;
+        }
+        else
+        {
+            if (array[left_ptr] == 0)
+            {
+                left_ptr++;
+            }
+            if (array[right_ptr] == 1)
+            {
+                right_ptr--;
+            }
         }
     }
 }
